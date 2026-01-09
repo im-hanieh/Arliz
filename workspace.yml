@@ -1,0 +1,65 @@
+project:
+  type: book
+  category: technical
+  title: "Arliz"
+  author: "m-mdy-m"
+  email: "bitsgenix@gmail.com"
+  date: "auto"
+  url: "https://github.com/papyrxis/arliz"
+
+build:
+  engine: pdflatex
+  bibtex: biber
+  output_dir: build
+  watch_mode: true
+
+version:
+  source: git
+  format: "v{major}.{minor}.{patch}"
+  fallback: "dev"
+
+components:
+  - fonts
+  - math
+  - graphics
+  - tables
+  - hyperref
+  - colors
+  - layout
+  - titles
+  - pagestyles
+  - env
+  - index
+  - bibliography
+  - code
+  - boxes
+  - commands/base
+
+features:
+  toc: true
+  index: true
+  bibliography: true
+  glossary: false
+  appendix: true
+
+frontmatter:
+  - cover
+  - title
+  - copyright
+  - preface
+  - introduction
+
+colors:
+  scheme: technical
+
+copyright:
+  type: cc-by-sa
+  year: "auto"
+  holder: "m-mdy-m"
+
+overrides:
+  components_dir: "configs"
+  allow:
+    - code.tex
+    - colors.tex
+    - env.tex
