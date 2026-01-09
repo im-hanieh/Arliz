@@ -62,4 +62,5 @@ overrides:
   allow:
     - code.tex
     - colors.tex
+    - fonts.tex
     - env.tex
