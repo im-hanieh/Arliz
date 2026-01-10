@@ -55,10 +55,6 @@
 			($(title.south west)+(0,-0.3)$) -- ($(title.south east)+(0,-0.3)$);
 		\end{tikzpicture}
 	}
-	
-	%--------------------------------------------
-	% Stylized subtitle with modern typography
-	%--------------------------------------------
 	\begin{tikzpicture}
 		\node (subtitle) {
 			\Large\textsc{\textcolor{myblue!70}{Arrays • Reasoning • Logic • Identity • Zero }}
@@ -68,10 +64,7 @@
 		($(subtitle.south west) + (-0.5cm, -0.3cm)$) -- 
 		($(subtitle.south east) + (0.5cm, -0.3cm)$);
 	\end{tikzpicture}\\[3em]
-	
-	%--------------------------------------------
-	% Contemporary quote with modern layout
-	%--------------------------------------------
+
 	\begin{minipage}{0.75\textwidth}
 		\centering
 		\large\itshape\color{gray!80}
@@ -79,25 +72,16 @@
 			every data structure tells the story of human ingenuity."}
 	\end{minipage}\\[4em]
 	
-	%--------------------------------------------
-	% Modern section separator
-	%--------------------------------------------
-	\begin{tikzpicture}
-		\draw[line width=2pt, color=myblue!60] (-3cm,0) -- (-1cm,0);
-		\node[circle, fill=myblue!60, inner sep=3pt] at (0,0) {};
-		\draw[line width=2pt, color=myblue!60] (1cm,0) -- (3cm,0);
-	\end{tikzpicture}\\[2em]
 	
 	\vfill
-	
 	\begin{tikzpicture}
 		\node (edition) {
 			\large\textsc{\textcolor{myblue!80}{Living First Edition}}
 		};
 		\node[below=0.5cm of edition, text=gray!70] {
-			\textit{Updated \today}
+			\textit{Updated: \today}
 		};
-		
+
 		% Modern accent lines
 		\draw[line width=3pt, color=myblue!30, rounded corners=2pt] 
 		($(edition.west) + (-1.5cm, 0.3cm)$) -- 
@@ -112,7 +96,7 @@
 	\begin{tikzpicture}
 		\node (copyright) {
 			\normalsize\textcolor{gray!60}{
-				\textcopyright\ 2025 \textbf{Mahdi} 
+				\textcopyright\ 2025 \textbf{Arliz} 
 			}
 		};
 		\node[below=0.3cm of copyright, text=gray!50] {
