@@ -1,159 +1,953 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARLIZ - A Journey Through Computational History</title>
-    <meta name="description" content="Explore ARLIZ: a comprehensive journey through the history of computation—from ancient tally marks to modern AI paradigms. Arrays, reasoning, logic, identity & zero explained.">
-    <meta name="keywords" content="computational history, arrays, reasoning, logic, identity, zero, data structures, algorithms">
-    <meta property="og:title" content="ARLIZ | A Journey Through Computational History">
-    <meta property="og:description" content="A deep dive into the evolution of computation: from primitive counting to quantum algorithms.">
-    <meta property="og:type" content="book">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ARLIZ | A Journey Through Computational History">
-    <meta name="twitter:description" content="From tally marks to AI: the story of computational thought.">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ARLIZ — Arrays, Reasoning, Logic, Identity, Zero. A deep technical exploration of the most fundamental data structure in computing, from hardware memory to distributed systems.">
+  <meta name="keywords" content="arrays, data structures, algorithms, computer architecture, ARLIZ, technical book, open source">
+  <meta name="author" content="Mahdi (m-mdy-m)">
+  <meta property="og:title" content="ARLIZ — Go Beyond Arrays, Memory, and Logic">
+  <meta property="og:description" content="A comprehensive technical journey through arrays: from philosophical foundations to quantum computing frontiers. Open source, living edition.">
+  <meta property="og:type" content="book">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>ARLIZ — Go Beyond Arrays, Memory, and Logic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231f2330'/><text x='50%25' y='68%25' text-anchor='middle' fill='%23c8894a' font-family='monospace' font-weight='900' font-size='18'>A</text></svg>">
 </head>
 <body>
-    <!-- Minimal Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="nav-brand">
-                <span class="nav-logo">⧉</span>
-                <span class="nav-text">ARLIZ</span>
-            </div>
-            <div class="time-indicator">
-                <span class="time-text">Journey through time</span>
-                <div class="time-progress"></div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Background Elements -->
-    <div class="cosmic-background">
-        <div class="stars"></div>
-        <div class="floating-particles" id="particles"></div>
-        <div class="cosmic-grid"></div>
+  <!-- SCROLL PROGRESS -->
+  <div id="scroll-progress" role="progressbar" aria-label="Reading progress"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand" aria-label="ARLIZ home">
+        <div class="nav-logo" aria-hidden="true">
+          <svg class="nav-logo-circuit" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="6" fill="rgba(200,137,74,0.12)" stroke="rgba(200,137,74,0.3)" stroke-width="1"/>
+            <circle cx="8" cy="8" r="2" fill="#c8894a"/>
+            <circle cx="24" cy="8" r="2" fill="#4fc3d4"/>
+            <circle cx="8" cy="24" r="2" fill="#4fc3d4"/>
+            <circle cx="24" cy="24" r="2" fill="#c8894a"/>
+            <circle cx="16" cy="16" r="3" fill="none" stroke="#c8894a" stroke-width="1.5"/>
+            <line x1="8" y1="8" x2="16" y2="16" stroke="rgba(200,137,74,0.4)" stroke-width="1"/>
+            <line x1="24" y1="8" x2="16" y2="16" stroke="rgba(79,195,212,0.4)" stroke-width="1"/>
+            <line x1="8" y1="24" x2="16" y2="16" stroke="rgba(79,195,212,0.4)" stroke-width="1"/>
+            <line x1="24" y1="24" x2="16" y2="16" stroke="rgba(200,137,74,0.4)" stroke-width="1"/>
+          </svg>
+        </div>
+        <span class="nav-wordmark">ARLIZ</span>
+      </a>
+
+      <div class="nav-links" role="list">
+        <a href="#preface" class="nav-link" role="listitem">Preface</a>
+        <a href="#introduction" class="nav-link" role="listitem">Introduction</a>
+        <a href="#parts" class="nav-link" role="listitem">Parts</a>
+        <a href="#contributors" class="nav-link" role="listitem">Contributors</a>
+        <a href="#download" class="nav-link" role="listitem">Download</a>
+        <a href="#community" class="nav-link" role="listitem">Community</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle dark mode">
+          <span class="theme-icon">☀</span>
+        </button>
+        <a href="https://github.com/m-mdy-m/Arliz" class="btn-icon" target="_blank" rel="noopener" aria-label="View on GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/m-mdy-m/Arliz/blob/main/book/Arliz.pdf" class="btn-download-nav" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          Read PDF
+        </a>
+        <button id="nav-hamburger" class="nav-hamburger" aria-expanded="false" aria-label="Open menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
     </div>
-    
-    <!-- Scroll Navigation -->
-    <div class="scroll-indicator" id="scrollIndicator">
-        <div class="scroll-line"></div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div id="nav-mobile" class="nav-mobile" role="navigation" aria-label="Mobile navigation">
+    <a href="#preface" class="nav-link">Preface</a>
+    <a href="#introduction" class="nav-link">Introduction</a>
+    <a href="#parts" class="nav-link">Parts &amp; Chapters</a>
+    <a href="#appendices" class="nav-link">Appendices</a>
+    <a href="#contributors" class="nav-link">Contributors</a>
+    <a href="#download" class="nav-link">Download</a>
+    <a href="#community" class="nav-link">Community</a>
+  </div>
+
+  <!-- ==========================================
+       HERO
+       ========================================== -->
+  <section class="hero" id="hero" aria-label="ARLIZ book introduction">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid"></div>
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+      <svg class="hero-circuit" viewBox="0 0 600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="4" fill="#c8894a"/>
+        <circle cx="300" cy="200" r="3" fill="#4fc3d4"/>
+        <circle cx="500" cy="150" r="5" fill="#c8894a"/>
+        <circle cx="200" cy="400" r="4" fill="#4fc3d4"/>
+        <circle cx="450" cy="500" r="3" fill="#c8894a"/>
+        <circle cx="150" cy="600" r="4" fill="#4fc3d4"/>
+        <circle cx="400" cy="700" r="5" fill="#c8894a"/>
+        <line x1="100" y1="100" x2="300" y2="200" stroke="#c8894a" stroke-width="1"/>
+        <line x1="300" y1="200" x2="500" y2="150" stroke="#4fc3d4" stroke-width="1"/>
+        <line x1="200" y1="400" x2="300" y2="200" stroke="#c8894a" stroke-width="1"/>
+        <line x1="450" y1="500" x2="500" y2="150" stroke="#4fc3d4" stroke-width="1"/>
+        <line x1="150" y1="600" x2="200" y2="400" stroke="#c8894a" stroke-width="1"/>
+        <line x1="400" y1="700" x2="450" y2="500" stroke="#4fc3d4" stroke-width="1"/>
+        <rect x="80" y="80" width="40" height="40" rx="4" stroke="#c8894a" stroke-width="0.5" fill="none"/>
+        <rect x="280" y="380" width="40" height="40" rx="4" stroke="#4fc3d4" stroke-width="0.5" fill="none"/>
+        <rect x="420" y="480" width="40" height="40" rx="4" stroke="#c8894a" stroke-width="0.5" fill="none"/>
+      </svg>
     </div>
-    
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-eyebrow fade-in">
+          <span class="hero-eyebrow-dot"></span>
+          Living First Edition · Open Source · v2026
+        </div>
+        <h1 class="hero-title fade-in stagger-1">
+          Go Beyond
+          <span class="hero-title-arliz">ARLIZ</span>
+        </h1>
+        <p class="hero-subtitle fade-in stagger-2">
+          Arrays, Memory, and Logic — A Journey from Philosophical Foundations to Computational Frontiers
+        </p>
+        <p class="hero-description fade-in stagger-3">
+          ARLIZ is not a reference book. It is an expedition into the deepest understanding of the most fundamental data structure in computing — from ancient clay tablets to quantum state vectors, from silicon transistors to distributed tensor processors.
+        </p>
+
+        <div class="hero-acronym fade-in stagger-4" aria-label="ARLIZ acronym">
+          <div class="hero-acronym-item">
+            <span class="hero-acronym-letter">A</span>
+            <span class="hero-acronym-word">Arrays</span>
+          </div>
+          <div class="hero-acronym-item">
+            <span class="hero-acronym-letter">R</span>
+            <span class="hero-acronym-word">Reasoning</span>
+          </div>
+          <div class="hero-acronym-item">
+            <span class="hero-acronym-letter">L</span>
+            <span class="hero-acronym-word">Logic</span>
+          </div>
+          <div class="hero-acronym-item">
+            <span class="hero-acronym-letter">I</span>
+            <span class="hero-acronym-word">Identity</span>
+          </div>
+          <div class="hero-acronym-item">
+            <span class="hero-acronym-letter">Z</span>
+            <span class="hero-acronym-word">Zero</span>
+          </div>
+        </div>
+
+        <div class="hero-actions fade-in stagger-5">
+          <a href="https://github.com/m-mdy-m/Arliz/blob/main/book/Arliz.pdf" class="btn-primary" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Read the Book
+          </a>
+          <a href="https://github.com/m-mdy-m/Arliz" class="btn-secondary" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            View Source
+          </a>
+          <a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="btn-secondary" target="_blank" rel="noopener">
+            Contribute
+          </a>
+        </div>
+
+        <div class="hero-meta fade-in stagger-6">
+          <div class="hero-stat">
+            <span class="hero-stat-value">6</span>
+            <span class="hero-stat-label">Major Parts</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">400+</span>
+            <span class="hero-stat-label">Chapter Topics</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">∞</span>
+            <span class="hero-stat-label">Living Edition</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-in stagger-3">
+        <div class="hero-book-card">
+          <div class="hero-book-cover" role="img" aria-label="ARLIZ book cover illustration">
+            <svg class="hero-cover-circuit" viewBox="0 0 400 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="50" cy="50" r="3" fill="#c8894a" opacity="0.4"/>
+              <circle cx="350" cy="80" r="2" fill="#4fc3d4" opacity="0.4"/>
+              <circle cx="80" cy="300" r="3" fill="#4fc3d4" opacity="0.3"/>
+              <circle cx="320" cy="400" r="4" fill="#c8894a" opacity="0.4"/>
+              <circle cx="200" cy="200" r="6" fill="none" stroke="#c8894a" stroke-width="1" opacity="0.4"/>
+              <circle cx="200" cy="200" r="12" fill="none" stroke="#4fc3d4" stroke-width="0.5" opacity="0.3"/>
+              <line x1="50" y1="50" x2="200" y2="200" stroke="#c8894a" stroke-width="0.8" opacity="0.3"/>
+              <line x1="350" y1="80" x2="200" y2="200" stroke="#4fc3d4" stroke-width="0.8" opacity="0.3"/>
+              <line x1="80" y1="300" x2="200" y2="200" stroke="#4fc3d4" stroke-width="0.8" opacity="0.3"/>
+              <line x1="320" y1="400" x2="200" y2="200" stroke="#c8894a" stroke-width="0.8" opacity="0.3"/>
+              <rect x="30" y="450" width="16" height="16" rx="2" fill="#c8894a" opacity="0.2"/>
+              <rect x="54" y="450" width="8" height="16" rx="2" fill="none" stroke="#c8894a" stroke-width="0.8" opacity="0.2"/>
+              <rect x="70" y="450" width="16" height="16" rx="2" fill="#c8894a" opacity="0.2"/>
+              <rect x="94" y="450" width="12" height="16" rx="2" fill="none" stroke="#4fc3d4" stroke-width="0.8" opacity="0.2"/>
+              <text x="130" y="463" fill="#4fc3d4" font-family="monospace" font-size="8" opacity="0.3">0xARLIZ</text>
+            </svg>
+            <span class="hero-cover-title">ARLIZ</span>
+            <span class="hero-cover-subtitle">Arrays · Reasoning · Logic · Identity · Zero</span>
+            <span class="hero-cover-author">Mahdi (m-mdy-m)</span>
+          </div>
+        </div>
+        <div class="hero-version-badge">
+          <span class="version-indicator"></span>
+          Living Edition · Open Source · CC BY-SA 4.0
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PREFACE
+       ========================================== -->
+  <section class="preface section" id="preface">
     <div class="container">
-        <!-- ARLIZ Header -->
-        <div class="arliz-header">
-            <h1 class="arliz-title">
-                <span class="arliz-letter" data-tooltip="Arrays">A</span>
-                <span class="arliz-letter" data-tooltip="Reasoning">R</span>
-                <span class="arliz-letter" data-tooltip="Logic">L</span>
-                <span class="arliz-letter" data-tooltip="Identity">I</span>
-                <span class="arliz-letter" data-tooltip="Zero">Z</span>
-            </h1>                                                                                                                                                                                            
-            <p class="subtitle">From Roots to Frontiers</p>
-            <p class="description">From ancient counting methods to modern computational thinking - exploring how humanity's systematic approach to organizing information evolved into the digital age</p>
-            <div class="timeline-span">
-                <span class="start-date">100,000 BCE</span>
-                <div class="timeline-connector"></div>
-                <span class="end-date">Present & Future</span>
-            </div>
+      <div class="preface-inner">
+        <div class="preface-left fade-in">
+          <p class="preface-label">§ Preface</p>
+          <h2 class="preface-heading">The Question That Started Everything</h2>
+          <p class="preface-tagline">
+            A single question — <em>"What even is an array, really?"</em> — led to years of research, hundreds of chapters, and a book that kept growing.
+          </p>
         </div>
-
-        <!-- Timeline -->
-        <div class="timeline">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item" data-era="ancient" data-index="0">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge ancient">Ancient Era</div>
-                    <span class="part-number">Part 1</span>
-                    <h3 class="part-title">Philosophical & Historical Foundations</h3>
-                    <p class="timeline-period">~100,000 BCE - 1700 CE</p>
-                    <p class="part-description">Early humans used marks and tokens to record counts—an implicit array of tallies. This section shows how grouping ideas and ordering items in sequences laid the groundwork for the array concept.</p>
-                </div>
+        <div class="preface-right fade-in stagger-2">
+          <div class="preface-body">
+            <p>
+              If I were to capture the essence of creating ARLIZ in a single word, that word would be <strong style="color:var(--text-primary)">curiosity</strong>. What you encounter here is the result of years of persistent questioning, a journey that began with a realization that was both embarrassing and energizing: I didn't truly understand what an array was.
+            </p>
+            <p>
+              This might sound trivial. After all, arrays are fundamental to programming, covered in every curriculum, explained in countless tutorials. Yet despite years of writing code, I found myself increasingly frustrated by the superficial explanations typically offered. Most resources assumed you already knew what these structures fundamentally represented — their conceptual essence, their implementation mechanics, their performance characteristics.
+            </p>
+            <blockquote class="preface-pull-quote">
+              "If I truly want to understand, I must build from the foundation."
+            </blockquote>
+            <p>
+              The name <strong style="color:var(--copper)">ARLIZ</strong> started as a somewhat arbitrary choice — it sounded right. But as the book evolved, the backronym emerged naturally: Arrays, Reasoning, Logic, Identity, Zero. These five pillars embody the journey from ancient counting stones to modern quantum registers.
+            </p>
+            <p>
+              ARLIZ is a living technical document. It evolves as understanding deepens and new implementation techniques emerge. What you read today will be improved tomorrow. This is not a weakness — it is the nature of genuine inquiry, shared openly.
+            </p>
+          </div>
+          <div class="preface-signature">
+            <div class="preface-avatar" aria-hidden="true">M</div>
+            <div>
+              <p class="preface-sig-name">Mahdi</p>
+              <p class="preface-sig-meta">Author · <a href="https://github.com/m-mdy-m" target="_blank" rel="noopener">@m-mdy-m</a> · Golestan, Iran · 2025–present</p>
             </div>
-
-            <div class="timeline-item" data-era="mathematical" data-index="1">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge mathematical">Mathematical Era</div>
-                    <span class="part-number">Part 2</span>
-                    <h3 class="part-title">Mathematical Fundamentals</h3>
-                    <p class="timeline-period">~600 BCE – 1900 CE</p>
-                    <p class="part-description">Formal math introduced notation and structures that inform array theory. Here we cover how number systems, set concepts, and early algebra shaped how we index, partition, and manipulate collections.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="data" data-index="2">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge data">Data Era</div>
-                    <span class="part-number">Part 3</span>
-                    <h3 class="part-title">Data Representation</h3>
-                    <p class="timeline-period">~1679 CE – 1950 CE</p>
-                    <p class="part-description">Transitioning math into machines required concrete layouts for data. This part focuses on binary encoding, memory layouts, and the earliest models of arrays in hardware and theory.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="architecture" data-index="3">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge architecture">Architecture Era</div>
-                    <span class="part-number">Part 4</span>
-                    <h3 class="part-title">Computer Architecture & Logic</h3>
-                    <p class="timeline-period">~1837 CE – 1970 CE</p>
-                    <p class="part-description">Hardware designs and instruction sets rely on arrays for registers, memory buffers, and data paths. We examine how architectures implement and optimize array access in early computers.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="array" data-index="4">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge array">Array Era</div>
-                    <span class="part-number">Part 5</span>
-                    <h3 class="part-title">Array Odyssey</h3>
-                    <p class="timeline-period">1950 CE - 1990 CE</p>
-                    <p class="part-description">The core exploration of arrays: linear, multidimensional, dynamic. We cover array operations, indexing strategies, and how these patterns became central in programs and data structures.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="algorithms" data-index="5">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge algorithms">Algorithm Era</div>
-                    <span class="part-number">Part 6</span>
-                    <h3 class="part-title">Data Structures & Algorithms</h3>
-                    <p class="timeline-period">~2000 BCE – 2000 CE</p>
-                    <p class="part-description">Building on arrays, this section outlines how lists, stacks, queues, trees, and graphs extend the basic indexed collection. We focus on array-based implementations and their performance implications.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="parallel" data-index="6">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge parallel">Parallel Era</div>
-                    <span class="part-number">Part 7</span>
-                    <h3 class="part-title">Parallelism & Systems</h3>
-                    <p class="timeline-period">1950 CE – 2010 CE</p>
-                    <p class="part-description">When data grows, arrays must be split, shared, or processed concurrently. This part reviews parallel array algorithms, distributed data layouts, and system designs that scale array operations.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item" data-era="future" data-index="7">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="era-badge future">Future Era</div>
-                    <span class="part-number">Part 8</span>
-                    <h3 class="part-title">Synthesis & Frontiers</h3>
-                    <p class="timeline-period">2000 CE - Present & Future</p>
-                    <p class="part-description">Arrays remain central as computing evolves: from GPU kernels to tensor processing, from AI data batches to quantum registers. We tie past lessons to emerging array paradigms and future challenges.</p>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- ==========================================
+       INTRODUCTION
+       ========================================== -->
+  <section class="section" id="introduction" style="background:var(--bg-deep);">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-eyebrow">Introduction</p>
+        <h2 class="section-title">What This Book Is — and Isn't</h2>
+        <p class="section-description">
+          ARLIZ is a focused, rigorous exploration of the array. Not a survey. Not a tutorial. A deep, layered investigation that demands engagement and rewards sustained effort.
+        </p>
+      </div>
+
+      <div class="intro-cards">
+        <div class="intro-card fade-in stagger-1">
+          <div class="intro-card-icon" aria-hidden="true">⚙</div>
+          <h3 class="intro-card-title">Hardware-First Perspective</h3>
+          <p class="intro-card-text">Every chapter is grounded in what actually happens at the metal. Transistors, voltage levels, cache lines, DRAM refresh cycles — the physical reality underneath every array you've ever written.</p>
+        </div>
+        <div class="intro-card fade-in stagger-2">
+          <div class="intro-card-icon" aria-hidden="true">∑</div>
+          <h3 class="intro-card-title">Mathematical Rigor</h3>
+          <p class="intro-card-text">Formal definitions, complexity proofs, information theory, and abstract algebra give the technical foundation that surface-level resources skip. Precision without unnecessary abstraction.</p>
+        </div>
+        <div class="intro-card fade-in stagger-3">
+          <div class="intro-card-icon" aria-hidden="true">◈</div>
+          <h3 class="intro-card-title">Modern Systems Reach</h3>
+          <p class="intro-card-text">From GPU tensor cores to distributed memory architectures, from NUMA awareness to quantum state vectors — arrays at every scale, on every computing substrate.</p>
+        </div>
+      </div>
+
+      <div class="intro-cards" style="margin-top:var(--space-6)">
+        <div class="intro-card fade-in stagger-1">
+          <div class="intro-card-icon" aria-hidden="true">📚</div>
+          <h3 class="intro-card-title">Prerequisites Honored</h3>
+          <p class="intro-card-text">ARLIZ assumes mathematical maturity: discrete mathematics, basic linear algebra, algorithmic analysis. Two companion books — <em>Mathesis</em> and <em>The Art of Algorithmic Analysis</em> — cover what you need.</p>
+        </div>
+        <div class="intro-card fade-in stagger-2">
+          <div class="intro-card-icon" aria-hidden="true">🔄</div>
+          <h3 class="intro-card-title">Continuously Improved</h3>
+          <p class="intro-card-text">No version of ARLIZ is the final version. Errors are found and corrected. Explanations are sharpened. New implementation techniques are documented. Your contributions shape the next edition.</p>
+        </div>
+        <div class="intro-card fade-in stagger-3">
+          <div class="intro-card-icon" aria-hidden="true">⚡</div>
+          <h3 class="intro-card-title">Practical Optimization</h3>
+          <p class="intro-card-text">Understanding arrays means understanding how to make them fast. SIMD intrinsics, cache blocking, false sharing, memory alignment — this book teaches you to reason about performance at the hardware level.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PARTS & CHAPTERS
+       ========================================== -->
+  <section class="parts section" id="parts">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-eyebrow">Book Architecture</p>
+        <h2 class="section-title">Six Parts, One Coherent Vision</h2>
+        <p class="section-description">
+          Each part builds on the last. You can read sequentially or dive directly into any part — but the order reflects genuine conceptual dependency.
+        </p>
+      </div>
+
+      <div class="parts-nav fade-in" role="tablist" aria-label="Filter parts">
+        <button class="part-tab active" data-filter="all" role="tab" aria-selected="true">All Parts</button>
+        <button class="part-tab" data-filter="1" role="tab" aria-selected="false">Foundations</button>
+        <button class="part-tab" data-filter="2" role="tab" aria-selected="false">Architecture</button>
+        <button class="part-tab" data-filter="3" role="tab" aria-selected="false">Arrays</button>
+        <button class="part-tab" data-filter="4" role="tab" aria-selected="false">Algorithms</button>
+        <button class="part-tab" data-filter="5" role="tab" aria-selected="false">Systems</button>
+        <button class="part-tab" data-filter="6" role="tab" aria-selected="false">Frontiers</button>
+      </div>
+
+      <div class="parts-grid fade-in stagger-1">
+
+        <!-- Part 1 -->
+        <div class="part-card" data-part="1">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-1">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">01</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Data Representation</h3>
+              <p class="part-description">How computers encode everything — from ancient counting marks to floating-point arithmetic, from ASCII to modern Unicode, from raw bits to complex encoded structures.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">50+ chapter topics</span>
+                <span class="part-status">Chapter 1 fully written</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-1">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">1.1</span><span class="chapter-name">The Philosophy of Representation</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.2</span><span class="chapter-name">Voltage to Bits</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.3</span><span class="chapter-name">Binary Representation and Boolean Algebra</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.4</span><span class="chapter-name">Number Systems and Bases</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.5</span><span class="chapter-name">Integer Representation: Unsigned</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.6</span><span class="chapter-name">Signed Integer Representation</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.7</span><span class="chapter-name">Integer Overflow and Wraparound</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.8</span><span class="chapter-name">Floating-Point Representation: IEEE 754</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.9</span><span class="chapter-name">Special Floating-Point Values</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.10</span><span class="chapter-name">Floating-Point Arithmetic Operations</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.11</span><span class="chapter-name">Floating-Point Error Analysis</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.12</span><span class="chapter-name">Unicode Transformation Formats</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.13</span><span class="chapter-name">Endianness: Byte Ordering</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.14</span><span class="chapter-name">Bitwise Operations and Manipulation</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.15</span><span class="chapter-name">Data Alignment and Structure Padding</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.16</span><span class="chapter-name">Image and Video Encoding</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.17</span><span class="chapter-name">Audio Representation and Sampling</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.18</span><span class="chapter-name">Error Detection and Correction Codes</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.19</span><span class="chapter-name">Data Serialization Formats</span></div>
+              <div class="chapter-item"><span class="chapter-num">1.20</span><span class="chapter-name">Compression Algorithms and Theory</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 2 -->
+        <div class="part-card" data-part="2">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-2">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">02</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Computer Architecture &amp; Logic</h3>
+              <p class="part-description">From silicon transistors to full processor pipelines. Cache hierarchies, DRAM timing, SIMD units, GPU architecture, memory management, and hardware repair diagnostics.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">120+ chapter topics</span>
+                <span class="part-status">In progress</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-2">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">2.1</span><span class="chapter-name">Semiconductor Physics Foundations</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.2</span><span class="chapter-name">MOSFET Transistors and CMOS Logic</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.3</span><span class="chapter-name">Combinational and Sequential Circuits</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.4</span><span class="chapter-name">Arithmetic Logic Units</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.5</span><span class="chapter-name">Memory Cell Design: SRAM and DRAM</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.6</span><span class="chapter-name">DRAM Timing and Generations</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.7</span><span class="chapter-name">Cache Memory Fundamentals</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.8</span><span class="chapter-name">Cache Coherence Protocols: MESI</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.9</span><span class="chapter-name">Instruction Set Architectures (x86, ARM, RISC-V)</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.10</span><span class="chapter-name">Pipeline Hazards and Branch Prediction</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.11</span><span class="chapter-name">Out-of-Order Execution and Speculation</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.12</span><span class="chapter-name">Virtual Memory and TLBs</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.13</span><span class="chapter-name">SIMD and Vector Processing</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.14</span><span class="chapter-name">GPU Architecture Overview</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.15</span><span class="chapter-name">Mobile SoC Architecture</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.16</span><span class="chapter-name">Hardware Repair Diagnostics</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.17</span><span class="chapter-name">PCB Inspection and Component Identification</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.18</span><span class="chapter-name">Soldering and Rework Techniques</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.19</span><span class="chapter-name">Power Delivery and VRM Diagnostics</span></div>
+              <div class="chapter-item"><span class="chapter-num">2.20</span><span class="chapter-name">Spectre, Meltdown, and Security Features</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 3 -->
+        <div class="part-card" data-part="3">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-3">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">03</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Array Odyssey</h3>
+              <p class="part-description">The heart of the book. Arrays explored from every angle: mathematical foundations, memory layout, sorting, searching, two-pointer techniques, SIMD vectorization, sparse representations, and hardware-aware optimization.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">150+ chapter topics</span>
+                <span class="part-status">In progress</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-3">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">3.1</span><span class="chapter-name">Mathematical Foundations of Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.2</span><span class="chapter-name">One-Dimensional Array: Memory Layout</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.3</span><span class="chapter-name">Dynamic Arrays: Implementation and Growth</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.4</span><span class="chapter-name">Multidimensional Arrays: Row vs Column Major</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.5</span><span class="chapter-name">Sparse Arrays: COO, CSR, CSC Formats</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.6</span><span class="chapter-name">Bit Arrays and Bitmap Operations</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.7</span><span class="chapter-name">Circular Arrays and Ring Buffers</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.8</span><span class="chapter-name">Binary Search and Variants</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.9</span><span class="chapter-name">Sorting: Merge Sort, Quick Sort, Timsort</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.10</span><span class="chapter-name">Linear-Time Sorting: Counting, Radix, Bucket</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.11</span><span class="chapter-name">Two-Pointer and Sliding Window Techniques</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.12</span><span class="chapter-name">Prefix Sums and Difference Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.13</span><span class="chapter-name">Kadane's Algorithm and Subarray Problems</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.14</span><span class="chapter-name">Cache Line Utilization and Prefetching</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.15</span><span class="chapter-name">SIMD Vectorization and Intrinsics</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.16</span><span class="chapter-name">Array Views, Slices, and Broadcasting</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.17</span><span class="chapter-name">Gather, Scatter, and Reduction Operations</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.18</span><span class="chapter-name">Array Transposition and Cache-Oblivious Algorithms</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.19</span><span class="chapter-name">Memory Testing Patterns and DRAM Diagnostics</span></div>
+              <div class="chapter-item"><span class="chapter-num">3.20</span><span class="chapter-name">Benchmarking and Roofline Model</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 4 -->
+        <div class="part-card" data-part="4">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-4">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">04</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Data Structures &amp; Algorithms</h3>
+              <p class="part-description">Arrays as foundation. Stacks, queues, heaps, hash tables, tries, graphs, segment trees, Fenwick trees — all understood through the lens of their array underpinnings.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">100+ chapter topics</span>
+                <span class="part-status">In progress</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-4">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">4.1</span><span class="chapter-name">Abstract Data Types</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.2</span><span class="chapter-name">Stacks and Queues: Array Implementations</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.3</span><span class="chapter-name">Binary Heaps and Priority Queues</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.4</span><span class="chapter-name">Hash Tables: Open Addressing and Chaining</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.5</span><span class="chapter-name">Bloom Filters and Probabilistic Structures</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.6</span><span class="chapter-name">String Matching: KMP, Boyer-Moore, Rabin-Karp</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.7</span><span class="chapter-name">Suffix Arrays and LCP Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.8</span><span class="chapter-name">Tries and Radix Trees</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.9</span><span class="chapter-name">Graph Representations: Matrix and List</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.10</span><span class="chapter-name">BFS, DFS, and Shortest Paths</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.11</span><span class="chapter-name">Disjoint-Set Union (Union-Find)</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.12</span><span class="chapter-name">Segment Trees and Lazy Propagation</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.13</span><span class="chapter-name">Fenwick Trees (Binary Indexed Trees)</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.14</span><span class="chapter-name">Monotonic Stack and Queue</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.15</span><span class="chapter-name">Dynamic Programming on Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.16</span><span class="chapter-name">Knapsack, LCS, Edit Distance, LIS</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.17</span><span class="chapter-name">Divide and Conquer Patterns</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.18</span><span class="chapter-name">Greedy Algorithms and Exchange Arguments</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.19</span><span class="chapter-name">Streaming Algorithms: Heavy Hitters, HyperLogLog</span></div>
+              <div class="chapter-item"><span class="chapter-num">4.20</span><span class="chapter-name">Cache-Oblivious Algorithms</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 5 -->
+        <div class="part-card" data-part="5">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-5">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">05</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Parallelism &amp; Systems</h3>
+              <p class="part-description">Modern computing is parallel. Thread-level, SIMD, GPU, and distributed parallelism — with complete coverage of atomics, memory models, MPI, CUDA, and NUMA-aware programming.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">130+ chapter topics</span>
+                <span class="part-status">In progress</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-5">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">5.1</span><span class="chapter-name">Concurrency vs. Parallelism</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.2</span><span class="chapter-name">Amdahl's Law and Gustafson's Law</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.3</span><span class="chapter-name">Thread Pools and Work Stealing</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.4</span><span class="chapter-name">OpenMP: Parallel Loops and Reductions</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.5</span><span class="chapter-name">Memory Consistency Models</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.6</span><span class="chapter-name">Lock-Free Programming and Atomics</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.7</span><span class="chapter-name">False Sharing and Cache Contention</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.8</span><span class="chapter-name">SIMD Programming: SSE, AVX, NEON</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.9</span><span class="chapter-name">GPU Execution Model: CUDA</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.10</span><span class="chapter-name">GPU Memory Hierarchy and Coalescing</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.11</span><span class="chapter-name">GPU Sorting, Reduction, and Scan</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.12</span><span class="chapter-name">MPI: Point-to-Point and Collective Ops</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.13</span><span class="chapter-name">Domain Decomposition and Ghost Cells</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.14</span><span class="chapter-name">NUMA Architecture and Memory Affinity</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.15</span><span class="chapter-name">MapReduce, Spark, and Distributed Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.16</span><span class="chapter-name">Real-Time Systems and WCET Analysis</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.17</span><span class="chapter-name">Multi-Core CPU Diagnostics</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.18</span><span class="chapter-name">GPU Hardware Diagnostics and Repair</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.19</span><span class="chapter-name">Parallel System Burn-In and Benchmarking</span></div>
+              <div class="chapter-item"><span class="chapter-num">5.20</span><span class="chapter-name">Energy-Efficient Computing</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 6 -->
+        <div class="part-card" data-part="6">
+          <div class="part-header" role="button" tabindex="0" aria-expanded="false" aria-controls="chapters-6">
+            <div class="part-number-badge" aria-hidden="true">
+              <span class="part-number-label">Part</span>
+              <span class="part-number-num">06</span>
+            </div>
+            <div class="part-header-text">
+              <h3 class="part-title">Synthesis &amp; Frontiers</h3>
+              <p class="part-description">Where arrays meet the future: deep learning tensors, quantum state vectors, DNA storage, neuromorphic computing, approximate algorithms, and the next paradigm shifts in computation.</p>
+              <div class="part-meta">
+                <span class="part-chapter-count">100+ chapter topics</span>
+                <span class="part-status">In progress</span>
+              </div>
+            </div>
+            <svg class="part-toggle" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="part-chapters" id="chapters-6">
+            <div class="chapters-columns">
+              <div class="chapter-item"><span class="chapter-num">6.1</span><span class="chapter-name">Tensors and Multidimensional Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.2</span><span class="chapter-name">Einstein Summation and Tensor Computing Frameworks</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.3</span><span class="chapter-name">Neural Networks as Array Transformations</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.4</span><span class="chapter-name">Convolution Implementation and Optimization</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.5</span><span class="chapter-name">Attention Mechanisms and Transformers</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.6</span><span class="chapter-name">Tensor Cores and TPU Systolic Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.7</span><span class="chapter-name">Dense and Sparse Linear Algebra (BLAS, LAPACK)</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.8</span><span class="chapter-name">Fast Fourier Transform and Applications</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.9</span><span class="chapter-name">Scientific Computing: FEM, CFD, N-Body</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.10</span><span class="chapter-name">Genomic Sequence Arrays and Alignment</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.11</span><span class="chapter-name">Quantum Computing Fundamentals</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.12</span><span class="chapter-name">Quantum State Vectors and Gate Operations</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.13</span><span class="chapter-name">DNA Data Storage</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.14</span><span class="chapter-name">Neuromorphic Computing and Spike Arrays</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.15</span><span class="chapter-name">Processing-in-Memory (PIM)</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.16</span><span class="chapter-name">Array Programming Languages (APL, Julia)</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.17</span><span class="chapter-name">Succinct Data Structures</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.18</span><span class="chapter-name">Privacy-Preserving Array Operations</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.19</span><span class="chapter-name">Post-Moore's Law Computing</span></div>
+              <div class="chapter-item"><span class="chapter-num">6.20</span><span class="chapter-name">Array Computing: Future Directions</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /parts-grid -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       APPENDICES
+       ========================================== -->
+  <section class="appendices section" id="appendices">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-eyebrow">Back Matter</p>
+        <h2 class="section-title">Appendices, Resources &amp; References</h2>
+        <p class="section-description">Supporting material that deepens your study and extends the book's reach beyond its chapters.</p>
+      </div>
+      <div class="appendix-grid fade-in stagger-1">
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">📖</span>
+          <h3 class="appendix-title">Glossary</h3>
+          <p class="appendix-text">Precise definitions of every technical term used throughout ARLIZ, from abstract data types to zero-copy I/O. A living reference updated with each edition.</p>
+          <a href="https://github.com/m-mdy-m/Arliz" class="appendix-link" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">📚</span>
+          <h3 class="appendix-title">Bibliography &amp; Further Reading</h3>
+          <p class="appendix-text">Curated references spanning information theory, computer architecture, algorithms, and hardware engineering. Primary sources are prioritized over secondary.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/tree/main/references" class="appendix-link" target="_blank" rel="noopener">Browse References →</a>
+        </div>
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">🔎</span>
+          <h3 class="appendix-title">Index</h3>
+          <p class="appendix-text">Comprehensive index of concepts, algorithms, hardware components, and programming constructs. Cross-referenced and continuously maintained.</p>
+          <a href="https://github.com/m-mdy-m/Arliz" class="appendix-link" target="_blank" rel="noopener">View Index →</a>
+        </div>
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">🧾</span>
+          <h3 class="appendix-title">Author's Notes &amp; Reflections</h3>
+          <p class="appendix-text">Candid observations on the writing process, naming conventions, perfectionism, and what it means to publish a technical work that never stops changing.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/blob/main/backmatter/note.tex" class="appendix-link" target="_blank" rel="noopener">Read Notes →</a>
+        </div>
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">⚖</span>
+          <h3 class="appendix-title">License &amp; Distribution</h3>
+          <p class="appendix-text">ARLIZ is released under Creative Commons Attribution-ShareAlike 4.0. Free to read, share, and build upon — with attribution. The source is always open.</p>
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="appendix-link" target="_blank" rel="noopener">CC BY-SA 4.0 →</a>
+        </div>
+        <div class="appendix-card">
+          <span class="appendix-icon" aria-hidden="true">✍</span>
+          <h3 class="appendix-title">Contribution Guidelines</h3>
+          <p class="appendix-text">Detailed instructions for contributing corrections, new chapters, additional examples, or LaTeX improvements. Every contribution matters and is acknowledged.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="appendix-link" target="_blank" rel="noopener">Contribute →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CONTRIBUTORS
+       ========================================== -->
+  <section class="contributors section" id="contributors">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-eyebrow">Contributors</p>
+        <h2 class="section-title">The People Behind ARLIZ</h2>
+        <p class="section-description">
+          ARLIZ grows through community. Every correction, clarification, and chapter contribution is acknowledged and celebrated.
+        </p>
+      </div>
+      <div class="contributors-grid">
+
+        <!-- Primary author -->
+        <div class="contributor-card fade-in stagger-1">
+          <div class="contributor-top">
+            <div class="contributor-avatar" data-github-avatar="m-mdy-m" aria-label="Avatar for Mahdi">M</div>
+            <div class="contributor-info">
+              <p class="contributor-name">Mahdi</p>
+              <p class="contributor-role">Author &amp; Maintainer</p>
+            </div>
+          </div>
+          <p class="contributor-bio">Self-taught backend engineer and open-source developer. Author of ARLIZ and maintainer of the Gland, PSX, and Gix projects. Computer Engineering student, Islamic Azad University.</p>
+          <div class="contributor-links">
+            <a href="https://github.com/m-mdy-m" class="contributor-link" target="_blank" rel="noopener" aria-label="Mahdi's GitHub profile">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              @m-mdy-m
+            </a>
+            <a href="mailto:bitsgenix@gmail.com" class="contributor-link" aria-label="Email Mahdi">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+              Email
+            </a>
+          </div>
+        </div>
+
+        <!-- Placeholder contributor cards for community -->
+        <div class="contributor-card fade-in stagger-2" style="border-style:dashed; opacity:0.6;">
+          <div class="contributor-top">
+            <div class="contributor-avatar" style="border-style:dashed; font-size:1.5rem;">+</div>
+            <div class="contributor-info">
+              <p class="contributor-name">Your Name Here</p>
+              <p class="contributor-role">Contributor</p>
+            </div>
+          </div>
+          <p class="contributor-bio">Submit a pull request, fix a typo, clarify an explanation, or add an example — and your name will appear on this page as part of the ARLIZ community.</p>
+          <div class="contributor-links">
+            <a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="contributor-link" target="_blank" rel="noopener">
+              How to Contribute →
+            </a>
+          </div>
+        </div>
+
+        <div class="contributor-card fade-in stagger-3" style="border-style:dashed; opacity:0.4;">
+          <div class="contributor-top">
+            <div class="contributor-avatar" style="border-style:dashed; font-size:1.5rem;">+</div>
+            <div class="contributor-info">
+              <p class="contributor-name">Community Reviewer</p>
+              <p class="contributor-role">Technical Review</p>
+            </div>
+          </div>
+          <p class="contributor-bio">Open a GitHub Issue to question a claim, suggest a better explanation, or report an error. All engaged readers become part of the ARLIZ community.</p>
+          <div class="contributor-links">
+            <a href="https://github.com/m-mdy-m/Arliz/issues" class="contributor-link" target="_blank" rel="noopener">
+              Open an Issue →
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DOWNLOAD
+       ========================================== -->
+  <section class="download section" id="download">
+    <div class="container">
+      <div class="download-inner">
+        <div class="download-text fade-in">
+          <p class="section-eyebrow" style="justify-content:flex-start; text-align:left;">Download</p>
+          <h2 class="download-heading">Read ARLIZ. Free, Always.</h2>
+          <p class="download-description">
+            ARLIZ is open source and freely distributed under Creative Commons BY-SA 4.0. Download the compiled PDF, browse the LaTeX source, or build it yourself. No account required.
+          </p>
+          <div class="download-options">
+            <a href="https://github.com/m-mdy-m/Arliz/blob/main/book/Arliz.pdf" class="download-option" target="_blank" rel="noopener">
+              <div class="download-option-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+              </div>
+              <div class="download-option-text">
+                <p class="download-option-title">Download PDF</p>
+                <p class="download-option-meta">Compiled · Latest build · GitHub</p>
+              </div>
+              <svg class="download-option-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/m-mdy-m/Arliz" class="download-option" target="_blank" rel="noopener">
+              <div class="download-option-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </div>
+              <div class="download-option-text">
+                <p class="download-option-title">Browse LaTeX Source</p>
+                <p class="download-option-meta">GitHub · Full repository</p>
+              </div>
+              <svg class="download-option-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/m-mdy-m/Arliz#read-the-book" class="download-option" target="_blank" rel="noopener">
+              <div class="download-option-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              </div>
+              <div class="download-option-text">
+                <p class="download-option-title">Build from Source</p>
+                <p class="download-option-meta">Makefile · XeLaTeX · Instructions</p>
+              </div>
+              <svg class="download-option-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="download-visual fade-in stagger-2">
+          <div class="download-card">
+            <p class="download-card-title">Book Statistics</p>
+            <div class="download-stats">
+              <div class="download-stat">
+                <span class="download-stat-value">6</span>
+                <span class="download-stat-label">Major Parts</span>
+              </div>
+              <div class="download-stat">
+                <span class="download-stat-value">600+</span>
+                <span class="download-stat-label">Chapter Topics</span>
+              </div>
+              <div class="download-stat">
+                <span class="download-stat-value">CC</span>
+                <span class="download-stat-label">BY-SA 4.0</span>
+              </div>
+              <div class="download-stat">
+                <span class="download-stat-value">∞</span>
+                <span class="download-stat-label">Free Forever</span>
+              </div>
+            </div>
+          </div>
+          <div class="download-card" style="background:var(--copper-dim); border-color:var(--border-copper);">
+            <p class="download-card-title" style="color:var(--copper);">Companion Books</p>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div style="padding:var(--space-3) var(--space-4);background:var(--bg-raised);border-radius:var(--radius-md);border:1px solid var(--border-subtle);">
+                <p style="font-weight:600;font-size:var(--text-sm);color:var(--text-primary);margin-bottom:4px;">Mathesis</p>
+                <p style="font-size:var(--text-xs);color:var(--text-muted);">Mathematical Foundations of Computing</p>
+              </div>
+              <div style="padding:var(--space-3) var(--space-4);background:var(--bg-raised);border-radius:var(--radius-md);border:1px solid var(--border-subtle);">
+                <p style="font-weight:600;font-size:var(--text-sm);color:var(--text-primary);margin-bottom:4px;">The Art of Algorithmic Analysis</p>
+                <p style="font-size:var(--text-xs);color:var(--text-muted);">Complexity Theory and Analysis</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       COMMUNITY
+       ========================================== -->
+  <section class="community section" id="community">
+    <div class="container">
+      <div class="section-header fade-in">
+        <p class="section-eyebrow">Community</p>
+        <h2 class="section-title">Join the Conversation</h2>
+        <p class="section-description">
+          ARLIZ grows through engagement. Report errors, suggest improvements, discuss concepts, contribute code. Every voice sharpens the book.
+        </p>
+      </div>
+      <div class="community-cards fade-in stagger-1">
+        <div class="community-card">
+          <div class="community-card-icon" aria-hidden="true">🐛</div>
+          <h3 class="community-card-title">Report an Error</h3>
+          <p class="community-card-text">Found a mistake? An unclear explanation? A broken reference? Open an issue and help ARLIZ become more accurate for every reader after you.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/issues/new?template=bug_report.yml" class="community-card-link" target="_blank" rel="noopener">
+            Open Bug Report →
+          </a>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon" aria-hidden="true">💡</div>
+          <h3 class="community-card-title">Suggest an Improvement</h3>
+          <p class="community-card-text">Have a better explanation, an important chapter that's missing, or a more elegant example? Share it. ARLIZ is shaped by the people who read it.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/issues/new?template=discussion_ideas.yml" class="community-card-link" target="_blank" rel="noopener">
+            Start a Discussion →
+          </a>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon" aria-hidden="true">🔀</div>
+          <h3 class="community-card-title">Contribute Content</h3>
+          <p class="community-card-text">Write a chapter, add examples, improve LaTeX formatting, or translate a section. Read the contribution guide and submit a pull request.</p>
+          <a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="community-card-link" target="_blank" rel="noopener">
+            Contribution Guide →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo" aria-label="ARLIZ">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="32" height="32" rx="6" fill="rgba(200,137,74,0.12)" stroke="rgba(200,137,74,0.3)" stroke-width="1"/>
+              <circle cx="8" cy="8" r="2" fill="#c8894a"/>
+              <circle cx="24" cy="8" r="2" fill="#4fc3d4"/>
+              <circle cx="8" cy="24" r="2" fill="#4fc3d4"/>
+              <circle cx="24" cy="24" r="2" fill="#c8894a"/>
+              <circle cx="16" cy="16" r="3" fill="none" stroke="#c8894a" stroke-width="1.5"/>
+              <line x1="8" y1="8" x2="16" y2="16" stroke="rgba(200,137,74,0.5)" stroke-width="1"/>
+              <line x1="24" y1="8" x2="16" y2="16" stroke="rgba(79,195,212,0.5)" stroke-width="1"/>
+              <line x1="8" y1="24" x2="16" y2="16" stroke="rgba(79,195,212,0.5)" stroke-width="1"/>
+              <line x1="24" y1="24" x2="16" y2="16" stroke="rgba(200,137,74,0.5)" stroke-width="1"/>
+            </svg>
+            <span class="footer-wordmark">ARLIZ</span>
+          </div>
+          <p class="footer-tagline">
+            "The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise."<br>— Edsger W. Dijkstra
+          </p>
+          <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="footer-license" target="_blank" rel="noopener">CC BY-SA 4.0 · Open Source</a>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Book</h4>
+          <ul class="footer-links">
+            <li><a href="#preface" class="footer-link">Preface</a></li>
+            <li><a href="#introduction" class="footer-link">Introduction</a></li>
+            <li><a href="#parts" class="footer-link">Parts &amp; Chapters</a></li>
+            <li><a href="#appendices" class="footer-link">Appendices</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/blob/main/book/Arliz.pdf" class="footer-link" target="_blank" rel="noopener">Download PDF</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Repository</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/m-mdy-m/Arliz" class="footer-link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/issues" class="footer-link" target="_blank" rel="noopener">Issues</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/pulls" class="footer-link" target="_blank" rel="noopener">Pull Requests</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/releases" class="footer-link" target="_blank" rel="noopener">Releases</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="footer-link" target="_blank" rel="noopener">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Contact</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/m-mdy-m" class="footer-link" target="_blank" rel="noopener">@m-mdy-m</a></li>
+            <li><a href="mailto:bitsgenix@gmail.com" class="footer-link">bitsgenix@gmail.com</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/blob/main/docs/CONTRIBUTING.md" class="footer-link" target="_blank" rel="noopener">Contribute</a></li>
+            <li><a href="https://github.com/m-mdy-m/Arliz/blob/main/LICENSE" class="footer-link" target="_blank" rel="noopener">License (MIT)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copyright">
+          &copy; 2024–2026 Mahdi (m-mdy-m). Content licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener" style="color:var(--copper)">CC BY-SA 4.0</a>. Software under <a href="https://github.com/m-mdy-m/Arliz/blob/main/LICENSE" target="_blank" rel="noopener" style="color:var(--copper)">MIT</a>.
+        </p>
+        <div class="footer-version">
+          <span class="footer-version-dot"></span>
+          Living Edition · Built 2026
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
 </body>
 </html>
