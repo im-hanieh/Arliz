@@ -64,3 +64,4 @@ overrides:
     - colors.tex
     - fonts.tex
     - env.tex
+    - graphics.tex
