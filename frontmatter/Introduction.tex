@@ -1,33 +1,32 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-\lettrine{A}{rrays are everywhere}. Every image you view, every text you read, every game you play, every database query you execute—arrays underlie them all. Yet despite their ubiquity, arrays remain poorly understood by most programmers. They are treated as primitive constructs, learned hastily and used mechanically, their true nature obscured by layers of abstraction.
+\lettrine{A}{rrays are everywhere}. Every image you view, every text you read, every game you play, every database query you execute, every model that recognizes your voice---arrays underlie them all. Yet despite their ubiquity, arrays remain poorly understood by most programmers. They are treated as primitive constructs, learned hastily and used mechanically, their true nature obscured by layers of abstraction stacked between a line of code and the silicon that executes it.
 
-This book exists to remedy that situation.
+\textit{Arliz} exists to remedy that situation. The Preface explained why I went looking for that remedy, what the name means, and why the work is divided into three volumes; this Introduction is about \emph{this} volume specifically---what it covers, what it assumes of you, and how it connects to the rest of the work.
 
-\section*{What This Book Is}
+\section*{This Volume in the Larger Work}
 
-\textit{Arliz} is a focused, technical exploration of the most fundamental data structure in computing: the array. Unlike comprehensive data structures textbooks that survey many structures superficially, we examine arrays with unprecedented depth—from their hardware representation in memory through their implementation in programming languages to their role in advanced algorithmic techniques.\\
-This is not a book for casual reading. It demands engagement, rewards persistence, and assumes substantial mathematical and computational maturity. If you seek quick tutorials or surface-level explanations, you will find this book frustrating. If you seek deep, rigorous understanding of how arrays actually work and why they behave as they do, you have found the right resource.
+% NOTE: Each volume's introduction should adjust this section to describe
 
-\section*{The Architecture of This Work}
+\textit{Arliz} follows one continuous path: from how information is encoded, to the machines that compute on that information, to the array itself in all its forms. That path is divided into three volumes:
 
-The book progresses through five major parts, each building on the foundations established by its predecessors:
+\begin{itemize}
+	\item \textbf{Volume I --- Substrate \& Signal} (this volume)\\
+	We begin with the fundamental question: how is information encoded in digital systems at all? We start at the level of voltage and binary switching, then move through binary representation and Boolean algebra, number systems, integer and floating-point formats, character encoding, bitwise operations, alignment, and serialization. This volume establishes the representational substrate that determines how every array element is actually stored and manipulated at the machine level.
 
-\textbf{Part I: Data Representation}\\
-We begin with the fundamental question: how is information encoded in digital systems? From binary representation through character encoding, from integer formats to floating-point arithmetic, we establish the representational foundations that determine how array elements are actually stored and manipulated at the machine level.
+	\item \textbf{Volume II --- Architecture \& Circuitry}\\
+	Picks up where this volume ends. Arrays do not exist in abstract space---they live in physical hardware with specific characteristics and constraints. Volume II examines semiconductor physics, logic gates, arithmetic circuits, memory cell design, the full memory hierarchy and cache behavior, processor pipelines, instruction set architectures, vector and SIMD units, GPU architecture, NUMA systems, and the interconnects that tie it all together.
 
-\textbf{Part II: Computer Architecture \& Logic}\\
-Arrays do not exist in abstract space—they live in physical hardware with specific characteristics and constraints. We examine logic gates, processor architecture, memory hierarchies, and cache behavior. Understanding these hardware realities is essential for writing array code that performs well on real systems.
+	\item \textbf{Volume III --- Array Odyssey}\\
+	The destination of the first two volumes. Arrays in full: their mathematics, memory layout, every major variant, the data structures and algorithms built on top of them, and the parallel and large-scale systems---from CPU threads to GPU kernels to distributed tensors---that process them today.
+\end{itemize}
 
-\textbf{Part III: Array Odyssey}\\
-This is the heart of the book. We explore arrays from every angle: their mathematical properties, their implementation in memory, their performance characteristics, their optimization techniques. We examine one-dimensional arrays, multidimensional arrays, sparse arrays, and specialized array variants. We analyze cache behavior, memory alignment, and hardware-level optimization strategies.
+Each volume is written to be readable on its own, but the dependencies run in one direction: Volume II assumes the representational vocabulary built here in Volume I, and Volume III assumes both. If you find yourself in Volume III wondering why an operation costs what it does at the hardware level, or in Volume II wondering why a value is encoded the way it is, the earlier volume is where that question is answered.
 
-\textbf{Part IV: Data Structures \& Algorithms}\\
-With arrays deeply understood, we examine how they enable other data structures. Stacks, queues, heaps, hash tables—all build on array foundations. We explore algorithmic techniques that leverage array properties, from sorting algorithms through dynamic programming.
+\section*{What This Volume Covers}
 
-\textbf{Part V: Parallelism \& Systems}\\
-Modern computing is parallel and distributed. We examine how arrays behave in multi-threaded environments, how they scale across distributed systems, and how they enable high-performance computing. This part connects classical array concepts to cutting-edge computational challenges.
+This volume answers a single question, asked as literally as possible: how is information encoded in digital systems, starting from nothing but a voltage difference? We begin before computing altogether---with what data \emph{is}, and what it means for one thing to represent another---and then follow that question through binary switching, Boolean algebra, positional number systems, signed and unsigned integers, fixed- and floating-point arithmetic, character encoding and Unicode, endianness, bitwise manipulation, memory alignment, media representations (color, image, audio, video), pointers, error detection and correction, and serialization and compression. By the end of this volume, you will have every representational tool needed to understand, in Volume II, how hardware actually stores and moves these encodings, and, in Volume III, how arrays organize them into the structures that power real software.
 
 \section*{Prerequisites}
 
@@ -38,25 +37,23 @@ This book assumes substantial preparation:
 \textbf{Algorithmic Analysis:} You should understand asymptotic notation, recurrence relations, and basic complexity analysis. The material in \textit{The Art of Algorithmic Analysis} provides the necessary foundations.
 
 \textbf{Programming Experience:} You should be proficient in at least one programming language and comfortable reading code in multiple languages. We use pseudocode, C, and occasionally other languages for examples.\\
-Without these prerequisites, you will struggle with substantial portions of this book. With them, you are prepared for a deep, rewarding exploration of arrays.
+Without these prerequisites, you will struggle with substantial portions of this volume. With them, you are prepared for a deep, rewarding start to the journey from voltage to vector.
 
 \section*{The Living Nature of This Work}
 
-Like all my books, \textit{Arliz} evolves continuously. As I discover better explanations, identify errors, recognize new connections, or encounter new implementation techniques, the book improves. Your engagement—through corrections, suggestions, implementations, and questions—contributes to this evolution.
-
-Check the GitHub repository regularly for updates. The version you read today will be superseded by improved versions tomorrow. This is not a weakness but a strength—the book remains current, accurate, and relevant.
+Check the GitHub repository regularly for updates. The version you read today will be superseded by improved versions tomorrow---and because the work is now split across volumes, each one can be revised on its own schedule without forcing a reprint of the others. This is not a weakness but a strength: the work remains current, accurate, and relevant, and your corrections and questions are part of how it gets there.
 
 \section*{A Note on Difficulty}
 
-This book is challenging by design. Arrays may seem simple on the surface, but their full understanding requires grappling with hardware architecture, memory systems, compiler optimizations, and algorithmic analysis. Some sections will require sustained effort to master.
+This volume is challenging by design, even though it is, in a sense, the most "elementary" of the three---it deals with representation rather than algorithms or hardware. But representation is where every later mistake is born: a misunderstood encoding produces bugs and performance problems that no amount of algorithmic cleverness can fix later. Some sections will require sustained effort to master.
 
-This difficulty is intentional. Genuine understanding is never cheap—it demands intellectual investment, persistent effort, and willingness to struggle with complex concepts. If you find sections difficult, that is normal. Persist. Work through examples. Implement the techniques. Understanding will come through sustained engagement.
+This difficulty is intentional. Genuine understanding is never cheap---it demands intellectual investment, persistent effort, and willingness to struggle with complex concepts. If you find sections difficult, that is normal. Persist. Work through examples. Understanding will come through sustained engagement, and it will pay off directly when you reach Volumes II and III.
 
 \section*{Begin}
 
-Five parts await. Each deepens your understanding of arrays—from representation through implementation to application. Each builds essential capabilities for working effectively with the most fundamental data structure in computing.
+This volume is the first stage of a longer journey---the one that starts at a voltage and, three volumes later, ends at a tensor. Everything here is foundation: necessary, occasionally dense, and built to be returned to.
 
-Welcome to \textbf{Arliz}. Let us explore arrays with the depth and rigor they deserve.
+Welcome to \textbf{Arliz}. Let us begin where everything begins---at the bit.
 
 \vfill
 
