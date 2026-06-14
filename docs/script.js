@@ -220,7 +220,7 @@
         '#stat-stars': repo.stargazers_count,
         '#stat-forks': repo.forks_count,
         '#stat-issues': repo.open_issues_count,
-        '#stat-watchers': repo.watchers_count,
+        '#stat-watchers': repo.subscribers_count,
         '#hero-stars': repo.stargazers_count
       };
 
