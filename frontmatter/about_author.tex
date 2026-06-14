@@ -2,40 +2,49 @@
 \addcontentsline{toc}{chapter}{About the Author}
 \chaptermark{About the Author}
 
-\begin{minipage}[t]{0.32\textwidth}
-	\vspace{0pt}
-	\includegraphics[width=\textwidth]{images/author-photo.jpg}
-\end{minipage}%
-\hfill%
-\begin{minipage}[t]{0.64\textwidth}
-	\vspace{0pt}
+\begin{wrapfigure}{l}{0.32\textwidth}
+    \centering
+    \vspace{-10pt}
+    \includegraphics[width=\linewidth]{images/author-photo.jpg}
+\end{wrapfigure}
+{\small \linespread{0.96}\selectfont
+\textbf{Mahdi} is a backend engineer, open-source developer, and lifelong
+computer enthusiast from Iran, currently pursuing a Bachelor's degree in Computer
+Engineering. His fascination with computers began long before university. From the age
+of four, computers were a constant companion first as a source of curiosity and games,
+and later as a window into understanding how technology works. Long before writing software, he enjoyed writing stories. At the age of thirteen or
+fourteen, he wrote his first book, a fictional story centered around dinosaurs. Although
+far removed from programming, that early experience cultivated a lasting appreciation
+for exploration, creativity, and the habit of pursuing ideas simply because they were
+interesting. At nineteen, upon entering university, a childhood fascination with computers evolved
+into a serious interest in software engineering. Alongside his academic studies, he began
+a largely self-directed journey into programming, driven not by formal curricula but by
+curiosity. Seeking structure for his studies, he created a personal roadmap repository,
+\textit{Algorithms \& Data Structures}, which gradually became both a learning journal
+and a guide through the broader landscape of computer science.\\
+That journey introduced him to a wide range of programming languages and paradigms.
+Beyond modern languages, he explored older and less common systems such as Perl,
+Haskell, Ada, and even a small amount of assembly language. Through C and C++, he
+built numerous small projects and developed a growing interest in the lower layers of
+computing how abstractions emerge from hardware and how software ultimately interacts
+with the machine beneath.\\
+Over the years, his work naturally gravitated toward developer tooling and infrastructure.
+He has built command-line utilities, backend frameworks, validation systems, HTTP
+clients, file-tree explorers, moderation services, and other software intended to make
+development environments simpler and easier to reason about. Much of this work has been
+released as open source and shared with the broader programming community.\\
+Eventually, a deceptively simple question emerged:
 
-	\textbf{Mahdi} (\href{https://github.com/m-mdy-m}{@m-mdy-m}) is a self-taught backend
-	developer and open-source author based in Iran. His interest in computing started not
-	from a classroom but from a recurring sense of dissatisfaction: tutorials and courses
-	kept telling him \emph{how} to use a tool---an array, a hash table, a CPU instruction---without
-	ever explaining \emph{why} it worked the way it did, or what was actually happening
-	underneath.\\[0.5em]
-	That dissatisfaction eventually turned into a habit of tracing every concept back to its
-	roots: from a programming construct to its memory layout, from memory layout to the
-	hardware that implements it, and from the hardware to the physics underneath that. Arliz
-	is the written record of that habit, applied specifically to the array---arguably the
-	single most important data structure in all of computing, and one of the most
-	under-explained.\\[0.5em]
-	Alongside Arliz, he maintains and continues to develop two companion works: \textit{Mathesis:
-	The Mathematical Foundations of Computing} and \textit{The Art of Algorithmic Analysis},
-	both written for the same reason---to provide the depth that introductory material
-	usually skips.
-\end{minipage}
-
-\vspace{1.5em}
-
-\noindent
-He is an active participant in open-source communities, primarily through the
-\href{https://github.com/papyrxis}{Papyrxis} organization on GitHub, where Arliz and its
-companion projects are developed in the open. Contributions, corrections, and discussions
-from readers are not just welcomed but actively shape the direction of future editions.
-
-\vspace{1em}
+\begin{center}
+    \emph{What is an array?}
+\end{center}
+At first, the question appeared trivial. But pursuing it led far beyond the boundaries
+of introductory programming. Following that thread revealed a path stretching from
+high-level languages to memory layouts, from CPU caches and transistor physics to GPUs,
+SIMD instructions, tensor cores, and even the foundations of quantum computation.\\
+\textit{Arliz} is the written record of that journey an attempt to follow one simple
+question as far as possible, and to understand not merely how arrays are used, but what
+they truly are.
+}
 
 \clearpage
