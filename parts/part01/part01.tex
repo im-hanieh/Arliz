@@ -1,11 +1,30 @@
 %==============================================
-% PART 1: DATA REPRESENTATION
+% VOLUME I: SUBSTRATE & SIGNAL
+% (was: "Data Representation" / "Part 1")
 %==============================================
-\part{Data Representation}
-\label{part:data-representation}
+%
+% NOTE ON VOLUME STRUCTURE:
+%   Arliz is now organized as three volumes rather than three parts of
+%   a single book (see Preface and Introduction). This file represents
+%   the content of Volume I. If compiled as a standalone book, replace
+%   \part{} below with \chapter{} of a suitable top-level structure, or
+%   treat this file's content as the main matter of its own document.
+%
+% MERGE NOTES (step by step, voltage -> bits -> arrays):
+%   - This volume keeps ALL original Part 1 chapters unchanged.
+%   - No chapters from the old later parts are merged here: those
+%     contain no purely "representation-level" content (everything
+%     array-related from them belongs either to Volume II's hardware
+%     material or to Volume III's array structures/algorithms/applications).
+%   - The opening chapters ("The Nature of Data," "The Philosophy of
+%     Representation") and "Voltage to Bits" remain the literal first
+%     steps of the whole work's voltage -> bit -> number -> array progression.
+%
+\part{Substrate \& Signal}
+\label{part:substrate-signal}
 
 \begin{partintro}
-\lettrine[lines=3]{B}{efore we} can understand how arrays store elements, we must first understand how computers represent information itself. Every piece of data—numbers, text, images, instructions—exists as patterns of bits. This part explores the foundational question: how do we encode meaning into binary?
+\lettrine[lines=3]{B}{efore we} can understand how arrays store elements, we must first understand how computers represent information itself. Every piece of data---numbers, text, images, instructions---exists as patterns of bits, and every bit begins its life as a voltage. This volume follows that single thread: from a voltage difference across a transistor, through binary encoding, to the numbers, characters, and bit-level structures that everything else in this work is built from.
 
 \begin{quote}
 \textit{``The choice of representation is often more important than the choice of algorithm.''}
@@ -14,8 +33,14 @@
 \end{quote}
 \end{partintro}
 
+% --- Opening chapters: what data is, and what it means to represent it ---
+\chapter{The Nature of Data}
+What data actually is before it is encoded: the distinction between data, information, and meaning; raw measurements versus interpreted values; data as the record of a distinction or a difference; the role of an observer or interpreter in turning a physical trace into data; examples spanning natural "data" (tree rings, sediment layers, starlight) and human-made data (tally marks, ledgers, sensor readings); why data alone is inert without a scheme to read it; the seed of the idea that everything downstream---bits, numbers, arrays---is data wrapped in successive layers of agreed-upon meaning.
 
-\input{parts/part01/chapter01/chapter01}
+\chapter{The Philosophy of Representation}
+What it means for one thing to stand for another; concrete versus abstract representation and the historical shift from tally marks to abstract number systems; Plato's allegory of the cave and the idea that representations can be incomplete or misleading; Aristotle's more practical view of mental representation as a useful internal model rather than a perfect copy; medieval and modern philosophical treatments of representation (Aquinas, Descartes, Kant, Sartre) and their relevance to encoding and interpretation; the layered nature of representation, where symbols represent symbols all the way down to physical reality; the abstraction hierarchy in computing, from physical voltages to applications, and where arrays sit within it; Shannon's information theory as the mathematical formalization of representation, encoding, decoding, and the bit as the fundamental unit of distinguishing information.
+
+% --- Step 1: voltage and binary switching (the literal starting point) ---
 \chapter{Voltage to Bits}
 How transistors encode binary states, voltage levels, noise margins, signal integrity, why binary won over ternary.
 
@@ -25,6 +50,7 @@ Two-state logic, Boolean operations, truth tables, De Morgan's laws, bit as fund
 \chapter{Number Systems and Bases}
 Positional notation, decimal, binary, octal, hexadecimal. Base conversion algorithms. Historical development. Why different bases matter for different purposes.
 
+% --- Step 2: integers ---
 \chapter{Integer Representation: Unsigned}
 Binary positional notation, range limitations, conversion algorithms, hexadecimal convenience.
 
@@ -37,6 +63,7 @@ Undefined behavior, modular arithmetic, detecting overflow, saturating arithmeti
 \chapter{Fixed-Point Representation}
 Q-format notation, scaling factors, precision-range tradeoffs, embedded systems applications, fixed-point arithmetic.
 
+% --- Step 3: floating point ---
 \chapter{Floating-Point Representation: IEEE 754}
 Sign, exponent, mantissa encoding, normalized and denormalized numbers, single vs. double precision.
 
@@ -55,6 +82,7 @@ IEEE 754-2008 decimal formats, financial computing requirements, densely packed 
 \chapter{Extended Precision and Arbitrary Precision}
 80-bit extended precision, quadruple precision (128-bit), arbitrary precision libraries (GMP, MPFR).
 
+% --- Step 4: characters and text ---
 \chapter{Character Encoding: ASCII and Extensions}
 7-bit ASCII, extended ASCII variants, code pages, limitations for internationalization.
 
@@ -67,12 +95,14 @@ UTF-8 (variable length, backward compatible), UTF-16 (surrogate pairs), UTF-32 (
 \chapter{Text Processing Complexities}
 Grapheme vs. code point counting, case folding, locale-dependent operations, text segmentation.
 
+% --- Step 5: byte ordering and exchange ---
 \chapter{Endianness: Byte Ordering}
 Big-endian vs. little-endian, historical reasons, network byte order, bi-endian systems, byte swapping.
 
 \chapter{Cross-Platform Data Exchange}
 Serialization formats, portable binary formats, protocol design considerations.
 
+% --- Step 6: bit-level manipulation (directly feeds into Volume III bit arrays) ---
 \chapter{Bitwise Operations Fundamentals}
 AND, OR, XOR, NOT operations, truth tables, bit manipulation primitives.
 
@@ -88,6 +118,7 @@ Packing multiple boolean flags, bitfields in structs, union tricks, bit arrays.
 \chapter{Advanced Bit Hacking}
 Finding rightmost set bit, isolating bit patterns, bit reversal, Gray code conversion.
 
+% --- Step 7: alignment (sets up cache-line discussion in Volume II) ---
 \chapter{Data Alignment Fundamentals}
 Natural alignment, alignment requirements by type, misalignment penalties.
 
@@ -97,6 +128,7 @@ Compiler padding rules, struct member ordering, packing pragmas, cache line awar
 \chapter{Alignment Optimization Techniques}
 Manual padding, alignment attributes, reordering for cache efficiency.
 
+% --- Step 8: media representations as arrays of encoded values ---
 \chapter{Color Representation Models}
 RGB, RGBA, HSV, HSL, CMYK, YUV, color spaces, gamma correction.
 
@@ -118,6 +150,7 @@ PCM (uncompressed), FLAC (lossless), MP3, AAC, Opus (lossy), perceptual coding.
 \chapter{Signal Processing Representations}
 Time domain, frequency domain, spectrograms, wavelet transforms.
 
+% --- Step 9: pointers (the bridge to address calculation in Volume III) ---
 \chapter{Pointer Representation}
 How pointers are stored in memory, pointer size (32-bit vs. 64-bit), pointer tagging.
 
@@ -127,6 +160,7 @@ Array element addressing, struct member offsets, pointer subtraction.
 \chapter{Special Pointer Values}
 Null pointers, wild pointers, dangling pointers, pointer alignment requirements.
 
+% --- Step 10: integrity and serialization (closing the representation layer) ---
 \chapter{Error Detection Codes}
 Parity bits (even/odd), checksums, CRC algorithms, hash-based integrity.
 
