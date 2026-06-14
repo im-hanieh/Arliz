@@ -245,7 +245,7 @@
         const isAuthor = contrib.login === 'm-mdy-m';
         const name = user?.name || contrib.login;
         const bio = isAuthor
-          ? 'Self-taught backend engineer and open-source developer. Author of ARLIZ. CS student.'
+          ? 'Backend engineer and open-source developer. Author of ARLIZ. CS student.'
           : (user?.bio || 'Open source contributor to the ARLIZ project.');
         const role = isAuthor ? 'Author & Maintainer' : 'Contributor';
         const initials = name.charAt(0).toUpperCase();

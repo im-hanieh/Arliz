@@ -37,7 +37,6 @@
 
     <nav class="nav-links" aria-label="Site sections">
       <a href="#preface"      class="nav-link">Preface</a>
-      <a href="#introduction" class="nav-link">Introduction</a>
       <a href="#contributors" class="nav-link">Contributors</a>
       <a href="#community"    class="nav-link">Community</a>
     </nav>
@@ -63,8 +62,6 @@
 <!-- Mobile nav -->
 <div id="mobile-nav" class="mobile-nav" role="navigation" aria-label="Mobile navigation">
   <a href="#preface"      class="nav-link">Preface</a>
-  <a href="#introduction" class="nav-link">Introduction</a>
-  <a href="#appendices"   class="nav-link">Appendices</a>
   <a href="#contributors" class="nav-link">Contributors</a>
   <a href="#community"    class="nav-link">Community</a>
 </div>
@@ -199,42 +196,41 @@
   <div class="wrap">
     <div class="preface-grid">
 
-      <!-- Left sticky label -->
       <div class="preface-sticky fade-up">
         <p class="preface-tag">Preface</p>
         <h2 class="preface-heading">From a Simple Question<br>to a Started Everything</h2>
         <p class="preface-tagline">
-          ARLIZ began with one uncomfortable question: <em>what is an array, really?</em> Following that question carefully turned a familiar programming topic into a much larger inquiry about memory, logic, abstraction, and computation itself.
+          ARLIZ began with one uncomfortable question: <em>what is an array, really?</em>
+          Following it seriously turned a familiar programming topic into a much larger
+          inquiry about memory, logic, abstraction, and computation itself.
         </p>
       </div>
 
-      <!-- Right: body text -->
       <div class="preface-body fade-up d2">
         <div class="preface-intro-card">
           <p class="preface-lead">
-            ARLIZ was not conceived as a broad survey of computer science. It emerged from a narrower and more demanding impulse: to revisit one of the oldest structures in programming with enough honesty to admit that the usual answers were incomplete.
-          </p>
-          <p>
-            Arrays appear everywhere — in beginner lessons, interview problems, systems code, numerical computing, graphics pipelines, storage engines, and machine learning workloads. Precisely because they are so familiar, they are often treated as settled knowledge. ARLIZ starts from the opposite assumption: that a concept this central deserves to be examined all the way down.
+            ARLIZ was not conceived as a broad survey of computer science. It emerged from
+            a narrower impulse: to revisit one of the oldest structures in programming with
+            enough honesty to admit that the usual answers were incomplete — and to follow
+            the question all the way from a voltage difference to a tensor.
           </p>
         </div>
 
-        <p>
-          That examination quickly expands beyond syntax. A real understanding of arrays passes through representation, address calculation, memory layout, cache locality, logic gates, DRAM organization, vector units, GPUs, and even the mathematical language used to describe structure and identity. In ARLIZ, the array is not merely a container; it is a bridge between abstract reasoning and physical machinery.
-        </p>
-
         <blockquote class="preface-quote">
-          “To understand arrays seriously is to move from notation to mechanism — from symbols in code to the hardware and logic that make those symbols real.”
+          "To understand arrays seriously is to move from notation to mechanism — from
+          symbols in code to the hardware and logic that make those symbols real."
         </blockquote>
 
         <p>
-          This is why the book follows the path suggested by its name: <strong>Arrays</strong>, <strong>Reasoning</strong>, <strong>Logic</strong>, <strong>Identity</strong>, and <strong>Zero</strong>. These are not decorative words. They describe the intellectual route of the project: from the structure programmers manipulate every day, to the formal principles that explain it, to the physical and conceptual boundaries that give it meaning.
+          That path is long enough that it no longer fits in a single book. ARLIZ is now
+          organized as <strong>three volumes</strong> — <em>Substrate &amp; Signal</em>,
+          <em>Architecture &amp; Circuitry</em>, and <em>Array Odyssey</em> — each a complete
+          stage of the same journey, readable on its own but part of one continuous line of
+          reasoning. See <a href="#volumes">Volumes</a> below for how they fit together.
         </p>
         <p>
-          ARLIZ is therefore written for readers who already know how to program and now want something more durable than recipes. It is a technical book about foundations, performance, and precision. It asks what happens when we refuse to stop at the API surface and keep following the question until it reaches silicon, mathematics, and systems design.
-        </p>
-        <p>
-          It is also a living work. The repository, the book, and the surrounding notes are meant to evolve together. Errors can be corrected, explanations can become sharper, and the architecture of the text can keep improving as new material is written. That openness is part of the method, not a footnote to it.
+          It is also a living work: errors get corrected and explanations get sharper, and
+          each volume keeps improving on its own schedule.
         </p>
 
         <div class="preface-sig">
@@ -252,102 +248,57 @@
   </div>
 </section>
 
+
 <!-- ══════════════════════════════════════
-     INTRODUCTION
+     VOLUMES
 ══════════════════════════════════════ -->
-<section class="intro section" id="introduction">
+<section class="volumes section" id="volumes">
   <div class="wrap">
     <div class="sec-header fade-up">
-      <p class="sec-eyebrow">Introduction</p>
-      <h2 class="sec-title">What This Book Is &mdash; and Is Not</h2>
+      <p class="sec-eyebrow">The Work</p>
+      <h2 class="sec-title">One Journey, Three Volumes</h2>
       <p class="sec-desc">
-        ARLIZ is a focused, rigorous investigation. Not a survey, not a tutorial. A deep,
-        layered expedition that demands engagement and rewards sustained effort.
+        ARLIZ follows a single path — from a voltage difference to a tensor — divided into
+        three volumes that can each be read, revised, and downloaded on their own.
       </p>
     </div>
+    <div class="volumes-grid">
 
-    <div class="intro-grid">
-      <div class="intro-card fade-up d1">
-        <div class="intro-ic" aria-hidden="true">⚙</div>
-        <h3 class="intro-ct">Hardware-First Perspective</h3>
-        <p class="intro-cd">Every concept is grounded in physical reality. Transistors, voltage levels, cache lines, DRAM refresh cycles — the substrate underneath every array you have ever written.</p>
+      <div class="volume-card fade-up d1">
+        <span class="volume-num">Volume I</span>
+        <h3 class="volume-title">Substrate &amp; Signal</h3>
+        <p class="volume-text">
+          How information is encoded at all — voltage and binary switching, Boolean
+          algebra, number systems, integers, floating point, characters, endianness,
+          bit manipulation, alignment, and serialization.
+        </p>
+        <a href="https://github.com/papyrxis/Arliz/releases/latest" class="volume-link" target="_blank" rel="noopener">
+          Read PDF →
+        </a>
       </div>
-      <div class="intro-card fade-up d2">
-        <div class="intro-ic" aria-hidden="true">∑</div>
-        <h3 class="intro-ct">Mathematical Rigor</h3>
-        <p class="intro-cd">Formal definitions, complexity proofs, information theory, abstract algebra. Precision without unnecessary abstraction. The math is here because it is needed, not decorative.</p>
-      </div>
-      <div class="intro-card fade-up d3">
-        <div class="intro-ic" aria-hidden="true">◈</div>
-        <h3 class="intro-ct">Modern Systems Reach</h3>
-        <p class="intro-cd">GPU tensor cores, NUMA architectures, distributed memory systems, quantum state vectors. Arrays at every scale, on every computing substrate available today.</p>
-      </div>
-      <div class="intro-card fade-up d1">
-        <div class="intro-ic" aria-hidden="true">📐</div>
-        <h3 class="intro-ct">Prerequisites Respected</h3>
-        <p class="intro-cd">ARLIZ assumes mathematical maturity. Two companion books — <em>Mathesis</em> and <em>The Art of Algorithmic Analysis</em> — cover discrete math, linear algebra, and complexity theory.</p>
-      </div>
-      <div class="intro-card fade-up d2">
-        <div class="intro-ic" aria-hidden="true">🔄</div>
-        <h3 class="intro-ct">Continuously Improved</h3>
-        <p class="intro-cd">No edition of ARLIZ is final. Errors are corrected. Explanations are sharpened. New techniques are documented as they emerge. Your contributions shape the next iteration.</p>
-      </div>
-      <div class="intro-card fade-up d3">
-        <div class="intro-ic" aria-hidden="true">⚡</div>
-        <h3 class="intro-ct">Performance-Aware</h3>
-        <p class="intro-cd">Understanding arrays means understanding how to make them fast. SIMD intrinsics, cache blocking, false sharing, memory alignment — reasoning about performance at the hardware level.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════════════════════════════════
-     APPENDICES
-══════════════════════════════════════ -->
-<section class="appendices section" id="appendices">
-  <div class="wrap">
-    <div class="sec-header fade-up">
-      <p class="sec-eyebrow">Back Matter</p>
-      <h2 class="sec-title">Appendices, Resources &amp; References</h2>
-      <p class="sec-desc">Supporting material that deepens study and extends the book's reach beyond its chapters.</p>
-    </div>
-    <div class="app-grid">
-      <div class="app-card fade-up d1">
-        <span class="app-icon" aria-hidden="true">📖</span>
-        <h3 class="app-title">Glossary</h3>
-        <p class="app-text">Precise definitions of every technical term used throughout ARLIZ — from abstract data types to zero-copy I/O. A living reference updated with each edition.</p>
-        <a href="https://github.com/papyrxis/Arliz" class="app-link" target="_blank" rel="noopener">View on GitHub →</a>
+      <div class="volume-card fade-up d2">
+        <span class="volume-num">Volume II</span>
+        <h3 class="volume-title">Architecture &amp; Circuitry</h3>
+        <p class="volume-text">
+          The hardware that turns encoded information into computation — logic gates,
+          memory cells and hierarchies, processors, pipelines, ISAs, SIMD, GPUs, and
+          interconnects.
+        </p>
+        <span class="volume-status">In progress</span>
       </div>
-      <div class="app-card fade-up d2">
-        <span class="app-icon" aria-hidden="true">📚</span>
-        <h3 class="app-title">Bibliography</h3>
-        <p class="app-text">Curated references spanning information theory, computer architecture, algorithms, and hardware engineering. Primary sources are always prioritized over secondary.</p>
-        <a href="https://github.com/papyrxis/Arliz/tree/main/references" class="app-link" target="_blank" rel="noopener">Browse References →</a>
+
+      <div class="volume-card fade-up d3">
+        <span class="volume-num">Volume III</span>
+        <h3 class="volume-title">Array Odyssey</h3>
+        <p class="volume-text">
+          Arrays themselves, in full — theory, memory layout, every major variant, the
+          data structures and algorithms built on them, and the parallel and distributed
+          systems that process them today.
+        </p>
+        <span class="volume-status">In progress</span>
       </div>
-      <div class="app-card fade-up d3">
-        <span class="app-icon" aria-hidden="true">🔎</span>
-        <h3 class="app-title">Index</h3>
-        <p class="app-text">Comprehensive index of concepts, algorithms, hardware components, and programming constructs. Cross-referenced and continuously maintained across all editions.</p>
-        <a href="https://github.com/papyrxis/Arliz" class="app-link" target="_blank" rel="noopener">View Index →</a>
-      </div>
-      <div class="app-card fade-up d1">
-        <span class="app-icon" aria-hidden="true">🧾</span>
-        <h3 class="app-title">Author's Notes</h3>
-        <p class="app-text">Candid reflections on the writing process, naming decisions, and what it means to publish a technical work that never stops changing.</p>
-        <a href="https://github.com/papyrxis/Arliz" class="app-link" target="_blank" rel="noopener">Read Notes →</a>
-      </div>
-      <div class="app-card fade-up d2">
-        <span class="app-icon" aria-hidden="true">⚖</span>
-        <h3 class="app-title">License</h3>
-        <p class="app-text">Released under Creative Commons Attribution-ShareAlike 4.0. Free to read, share, and build upon &mdash; with attribution. The LaTeX source is always open.</p>
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="app-link" target="_blank" rel="noopener">CC BY-SA 4.0 →</a>
-      </div>
-      <div class="app-card fade-up d3">
-        <span class="app-icon" aria-hidden="true">✍</span>
-        <h3 class="app-title">Contributing</h3>
-        <p class="app-text">Detailed instructions for contributing corrections, new chapters, additional examples, or LaTeX improvements. Every contribution is acknowledged.</p>
-        <a href="https://github.com/papyrxis/Arliz/blob/main/docs/CONTRIBUTING.md" class="app-link" target="_blank" rel="noopener">Contribution Guide →</a>
-      </div>
+
     </div>
   </div>
 </section>
