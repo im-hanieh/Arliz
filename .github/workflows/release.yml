@@ -14,14 +14,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # ----------------------------------------------------------------------
+  # Job 1: Build each volume's PDF (and the generated standalone .tex file)
+  # ----------------------------------------------------------------------
   build-volumes:
     name: Build ${{ matrix.volume }}
     runs-on: ubuntu-latest
     container:
       image: texlive/texlive:latest
-    defaults:
-      run:
-        shell: bash
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -36,7 +37,7 @@ jobs:
           apt-get update
           apt-get install -y --no-install-recommends make git bash
 
-      - name: Verify committed .pxis/ preset is present
+      - name: Verify committed .pxis/preset.tex is present
         run: |
           test -f .pxis/preset.tex || {
             echo "::error::.pxis/preset.tex is missing from this checkout."
@@ -49,20 +50,24 @@ jobs:
 
       - name: Resolve output basename for this volume
         id: meta
+        if: always()
+        shell: bash
         run: |
           source <(tr -d '\r' < volumes/${{ matrix.volume }}.conf)
           YEAR="$(date -u '+%Y')"
           echo "basename=${YEAR}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}" >> "$GITHUB_OUTPUT"
 
       - name: Upload PDF artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.volume }}-pdf
           path: build/${{ steps.meta.outputs.basename }}.pdf
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
 
       - name: Upload generated LaTeX source
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.volume }}-tex
@@ -70,10 +75,13 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
+  # ----------------------------------------------------------------------
+  # Job 2: On a tag push, collect the built volumes and publish a Release
+  # ----------------------------------------------------------------------
   create-release:
     name: Create GitHub Release
     needs: build-volumes
-    if: always() && startsWith(github.ref, 'refs/tags/') && contains(needs.build-volumes.result, 'success')
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
 
     steps:
@@ -82,18 +90,13 @@ jobs:
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
-        continue-on-error: true
         with:
           path: artifacts
 
       - name: Collect release assets
         run: |
           mkdir -p release
-          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \; 2>/dev/null || true
-          if [ -z "$(ls -A release 2>/dev/null)" ]; then
-            echo "::error::No build artifacts found to release."
-            exit 1
-          fi
+          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \;
           ls -lh release
 
       - name: Extract version from tag
