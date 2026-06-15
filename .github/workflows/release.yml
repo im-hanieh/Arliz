@@ -49,6 +49,7 @@ jobs:
 
       - name: Resolve output basename for this volume
         id: meta
+        shell: bash
         run: |
           source <(tr -d '\r' < volumes/${{ matrix.volume }}.conf)
           YEAR="$(date -u '+%Y')"
