@@ -5,11 +5,19 @@ WORKSPACE_ROOT := $(shell pwd)
 SRC_DIR := $(WORKSPACE_ROOT)/src
 WORKSPACE := workspace
 
+SCRIPTS_VOL   := $(WORKSPACE_ROOT)/scripts/volumes
+VOLUMES_DIR   := $(WORKSPACE_ROOT)/volumes
 ifeq ($(shell [ -d "$(WORKSPACE)" ] && echo 1 || echo 0), 1)
     WORKSPACE_SRC := $(WORKSPACE)/src
 else
     WORKSPACE_SRC := $(SRC_DIR)
 endif
+
+.PHONY: all vol1 vol2 vol3 volumes \
+        generate-vol1 generate-vol2 generate-vol3 \
+        clean clean-vol1 clean-vol2 clean-vol3 \
+        sync build watch version help \
+        part chapter cover test
 
 all: sync build
 
@@ -53,31 +61,82 @@ test:
 	@$(MAKE) build >/dev/null 2>&1 && echo "✓ Build successful" || echo "✗ Build failed"
 
 help:
-	@echo "Papyrxis Workspace - Build System"
 	@echo ""
-	@echo "MAIN TARGETS:"
-	@echo "  make            Build document (sync + build)"
-	@echo "  make sync       Sync workspace components from workspace.yml"
-	@echo "  make build      Build LaTeX document"
-	@echo "  make clean      Remove all build artifacts"
-	@echo "  make watch      Watch mode (auto-rebuild on changes)"
+	@echo "Arliz Build System"
+	@echo "────────────────────────────────────────────────"
 	@echo ""
-	@echo "GENERATORS:"
-	@echo "  make part ARGS='-n 2 -t \"Part Title\"'"
-	@echo "  make chapter ARGS='-p 1 -c 2 -t \"Chapter Title\"'"
-	@echo "  make cover      Generate cover page"
+	@echo "VOLUME BUILDS"
+	@echo "  make vol1          Compile Volume I  → build/Arliz-Vol1.pdf"
+	@echo "  make vol2          Compile Volume II → build/Arliz-Vol2.pdf"
+	@echo "  make vol3          Compile Volume III→ build/Arliz-Vol3.pdf"
+	@echo "  make volumes       Compile all three volumes"
 	@echo ""
-	@echo "UTILITIES:"
-	@echo "  make version    Show version information"
-	@echo "  make test       Quick build test"
-	@echo "  make help       Show this help"
+	@echo "GENERATE ONLY (for TeXstudio manual compile)"
+	@echo "  make generate-vol1   Produce vol1.tex from main.tex + vol1.conf"
+	@echo "  make generate-vol2   Produce vol2.tex"
+	@echo "  make generate-vol3   Produce vol3.tex"
 	@echo ""
-	@echo "EXAMPLES:"
-	@echo "  make                                    # Build document"
-	@echo "  make watch                              # Auto-rebuild"
-	@echo "  make part ARGS='-n 1 -t \"Introduction\"'"
-	@echo "  make chapter ARGS='-p 1 -c 1 -t \"Getting Started\"'"
+	@echo "CLEAN"
+	@echo "  make clean           Remove build/ and all vol*.tex"
+	@echo "  make clean-vol1      Remove only vol1 artifacts"
+	@echo "  make clean-vol2      Remove only vol2 artifacts"
+	@echo "  make clean-vol3      Remove only vol3 artifacts"
 	@echo ""
-	@echo "For more information: docs/getting-started.md"
+	@echo "WORKSPACE (papyrxis)"
+	@echo "  make sync            Sync .pxis/ from workspace.yml"
+	@echo "  make build           Workspace default build"
+	@echo "  make watch           Watch mode (auto-rebuild)"
+	@echo ""
+	@echo "GENERATORS"
+	@echo "  make part    ARGS='-n 4 -t \"Part Title\"'"
+	@echo "  make chapter ARGS='-p 1 -c 3 -t \"Chapter Title\"'"
+	@echo "  make cover           Regenerate cover"
+	@echo ""
+	@echo "UTILITIES"
+	@echo "  make version         Show version + build date"
+	@echo "  make test            Smoke-test vol1 build"
+	@echo "  make help            Show this help"
+	@echo ""
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := help
+
+vol1:
+	@$(MAKE) clean-vol1
+	@bash "$(SCRIPTS_VOL)/build.sh" vol1
+ 
+vol2:
+	@$(MAKE) clean-vol2
+	@bash "$(SCRIPTS_VOL)/build.sh" vol2
+ 
+vol3:
+	@$(MAKE) clean-vol3
+	@bash "$(SCRIPTS_VOL)/build.sh" vol3
+ 
+volumes:
+	@$(MAKE) clean-vols
+	@bash "$(SCRIPTS_VOL)/build.sh" all
+
+
+generate-vol1:
+	@bash "$(SCRIPTS_VOL)/generate.sh" vol1
+ 
+generate-vol2:
+	@bash "$(SCRIPTS_VOL)/generate.sh" vol2
+ 
+generate-vol3:
+	@bash "$(SCRIPTS_VOL)/generate.sh" vol3
+
+clean-vols:
+	@bash "$(SCRIPTS_VOL)/clean.sh"
+ 
+clean-vol1:
+	@rm -rf "$(BUILD_DIR)/vol1" "$(BUILD_DIR)/Arliz-Vol1.pdf" "$(ROOT)/vol1.tex"
+	@echo "cleaned vol1 artifacts"
+ 
+clean-vol2:
+	@rm -rf "$(BUILD_DIR)/vol2" "$(BUILD_DIR)/Arliz-Vol2.pdf" "$(ROOT)/vol2.tex"
+	@echo "cleaned vol2 artifacts"
+ 
+clean-vol3:
+	@rm -rf "$(BUILD_DIR)/vol3" "$(BUILD_DIR)/Arliz-Vol3.pdf" "$(ROOT)/vol3.tex"
+	@echo "cleaned vol3 artifacts"
