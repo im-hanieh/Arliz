@@ -1,0 +1,139 @@
+name: Build & Release Volumes
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ----------------------------------------------------------------------
+  # Job 1: Build each volume's PDF (and the generated standalone .tex file)
+  # ----------------------------------------------------------------------
+  build-volumes:
+    name: Build ${{ matrix.volume }}
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        volume: [vol1, vol2, vol3]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install build prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends make git bash
+
+      - name: Sync workspace preset (if the workspace submodule is present)
+        run: |
+          if [ -f workspace/src/sync.sh ]; then
+            make sync
+          else
+            echo "workspace/ not available, using committed .pxis/preset.tex"
+          fi
+        continue-on-error: true
+
+      - name: Build ${{ matrix.volume }} (generate + latexmk + biber)
+        run: bash scripts/volumes/build.sh ${{ matrix.volume }}
+
+      - name: Resolve output basename for this volume
+        id: meta
+        run: |
+          source <(tr -d '\r' < volumes/${{ matrix.volume }}.conf)
+          YEAR="$(date -u '+%Y')"
+          echo "basename=${YEAR}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.volume }}-pdf
+          path: build/${{ steps.meta.outputs.basename }}.pdf
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload generated LaTeX source
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.volume }}-tex
+          path: ${{ steps.meta.outputs.basename }}.tex
+          if-no-files-found: warn
+          retention-days: 7
+
+  # ----------------------------------------------------------------------
+  # Job 2: On a tag push, collect the built volumes and publish a Release
+  # ----------------------------------------------------------------------
+  create-release:
+    name: Create GitHub Release
+    needs: build-volumes
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect release assets
+        run: |
+          mkdir -p release
+          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \;
+          ls -lh release
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes from docs/CHANGELOG.md
+        id: notes
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          CHANGELOG="docs/CHANGELOG.md"
+          if grep -q "## \[${VERSION}\]" "$CHANGELOG"; then
+            sed -n "/## \[${VERSION}\]/,/^## \[/p" "$CHANGELOG" | sed '$d' > release_notes.md
+          else
+            {
+              echo "Release ${{ github.ref_name }}"
+              echo ""
+              echo "See [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/docs/CHANGELOG.md) for details."
+            } > release_notes.md
+          fi
+          cat release_notes.md
+
+      - name: Determine prerelease flag
+        id: pre
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          if [[ "$VERSION" == *-* ]]; then
+            echo "flag=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "flag=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Arliz ${{ github.ref_name }}"
+          body_path: release_notes.md
+          files: release/*
+          draft: false
+          prerelease: ${{ steps.pre.outputs.flag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
