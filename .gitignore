@@ -23,3 +23,4 @@ arch*.tex
 .backups
 /vol*.tex
 /build/
+*_ARLIZ_*.tex

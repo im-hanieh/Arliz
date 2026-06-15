@@ -22,7 +22,15 @@ build_one() {
 
   source <(tr -d '\r' < "$conf")
 
-  info "[$vol] generate ${vol}.tex"
+  : "${VOLUME_NUM:?VOLUME_NUM not set in $conf}"
+  : "${VOLUME_TITLE:?VOLUME_TITLE not set in $conf}"
+
+  # Output basename, e.g. 2026_ARLIZ_Zero_to_Bit_1
+  local year
+  year="$(date -u '+%Y')"
+  local out_basename="${year}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}"
+
+  info "[$vol] generate ${out_basename}.tex"
   bash "$GENERATE" "$vol"
 
   info "[$vol] compile (latexmk → pdflatex, 2 passes + biber)"
@@ -37,16 +45,16 @@ build_one() {
       -use-make \
       -recorder \
       -output-directory="$BUILD_DIR/$vol" \
-      "${vol}.tex"
+      "${out_basename}.tex"
   )
 
-  # Copy the finished PDF to build/ root with the volume's chosen name
-  local src="$BUILD_DIR/$vol/${vol}.pdf"
-  local dst="$BUILD_DIR/${PDF_OUTPUT}"
+  # Copy the finished PDF to build/ root with the standardized name
+  local src="$BUILD_DIR/$vol/${out_basename}.pdf"
+  local dst="$BUILD_DIR/${out_basename}.pdf"
   [[ -f "$src" ]] || die "latexmk finished but $src not found"
   cp "$src" "$dst"
 
-  info "[$vol] done → build/${PDF_OUTPUT}"
+  info "[$vol] done → build/${out_basename}.pdf"
 }
 
 [[ $# -eq 1 ]] || usage

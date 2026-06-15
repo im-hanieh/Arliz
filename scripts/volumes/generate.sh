@@ -11,7 +11,6 @@ VOL="$1"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CONF="$ROOT/volumes/${VOL}.conf"
 TEMPLATE="$ROOT/main.tex"
-OUTPUT="$ROOT/${VOL}.tex"
 
 [[ -f "$CONF" ]]     || die "no config for volume '$VOL' (expected $CONF)"
 [[ -f "$TEMPLATE" ]] || die "template not found ($TEMPLATE)"
@@ -27,6 +26,14 @@ source <(tr -d '\r' < "$CONF")
 : "${PDF_SUBJECT:?PDF_SUBJECT not set in $CONF}"
 : "${PDF_KEYWORDS:?PDF_KEYWORDS not set in $CONF}"
 : "${MAIN_FRONTMATTER:?MAIN_FRONTMATTER not set in $CONF}"
+: "${VOLUME_NUM:?VOLUME_NUM not set in $CONF}"
+: "${VOLUME_TITLE:?VOLUME_TITLE not set in $CONF}"
+
+# Output basename, e.g. 2026_ARLIZ_Zero_to_Bit_1
+YEAR="$(date -u '+%Y')"
+OUT_BASENAME="${YEAR}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}"
+
+OUTPUT="$ROOT/${OUT_BASENAME}.tex"
 
 PARTS_BLOCK=""
 for p in "${PARTS[@]}"; do
