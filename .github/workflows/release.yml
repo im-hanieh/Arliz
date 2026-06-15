@@ -1,5 +1,18 @@
 name: Build & Release Volumes
 
+# Builds all three Arliz volumes (vol1, vol2, vol3) as standalone PDFs and,
+# when triggered by a version tag, publishes a GitHub Release whose notes are
+# pulled straight from the matching section of docs/CHANGELOG.md.
+#
+# To cut a release:
+#   1. Add a "## [X.Y.Z...]" section to docs/CHANGELOG.md describing the release.
+#   2. git tag -a vX.Y.Z... -m "Arliz vX.Y.Z..."
+#   3. git push origin vX.Y.Z...
+#
+# Example for this project's first structural beta:
+#   git tag -a v1.0.0-beta-Volume_I -m "Arliz v1.0.0-beta-Volume_I"
+#   git push origin v1.0.0-beta-Volume_I
+
 on:
   push:
     tags:
@@ -30,22 +43,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Install build prerequisites
         run: |
           apt-get update
           apt-get install -y --no-install-recommends make git bash
 
-      - name: Sync workspace preset (if the workspace submodule is present)
+      - name: Verify committed .pxis/ preset is present
         run: |
-          if [ -f workspace/src/sync.sh ]; then
-            make sync
-          else
-            echo "workspace/ not available, using committed .pxis/preset.tex"
-          fi
-        continue-on-error: true
+          test -f .pxis/preset.tex || {
+            echo "::error::.pxis/preset.tex is missing from this checkout."
+            echo "::error::Run 'make sync' locally and commit .pxis/ before tagging a release."
+            exit 1
+          }
 
       - name: Build ${{ matrix.volume }} (generate + latexmk + biber)
         run: bash scripts/volumes/build.sh ${{ matrix.volume }}
