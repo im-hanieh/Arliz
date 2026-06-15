@@ -21,3 +21,5 @@ arch*.tex
 *.ist
 .build/
 .backups
+/vol*.tex
+/build/
