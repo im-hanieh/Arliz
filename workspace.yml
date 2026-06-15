@@ -65,4 +65,3 @@ overrides:
     - fonts.tex
     - env.tex
     - graphics.tex
-    - hyperref.tex
