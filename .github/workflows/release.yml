@@ -14,14 +14,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ----------------------------------------------------------------------
-  # Job 1: Build each volume's PDF (and the generated standalone .tex file)
-  # ----------------------------------------------------------------------
   build-volumes:
     name: Build ${{ matrix.volume }}
     runs-on: ubuntu-latest
     container:
       image: texlive/texlive:latest
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -49,7 +49,6 @@ jobs:
 
       - name: Resolve output basename for this volume
         id: meta
-        shell: bash
         run: |
           source <(tr -d '\r' < volumes/${{ matrix.volume }}.conf)
           YEAR="$(date -u '+%Y')"
@@ -71,13 +70,10 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-  # ----------------------------------------------------------------------
-  # Job 2: On a tag push, collect the built volumes and publish a Release
-  # ----------------------------------------------------------------------
   create-release:
     name: Create GitHub Release
     needs: build-volumes
-    if: startsWith(github.ref, 'refs/tags/')
+    if: always() && startsWith(github.ref, 'refs/tags/') && contains(needs.build-volumes.result, 'success')
     runs-on: ubuntu-latest
 
     steps:
@@ -86,13 +82,18 @@ jobs:
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           path: artifacts
 
       - name: Collect release assets
         run: |
           mkdir -p release
-          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \;
+          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \; 2>/dev/null || true
+          if [ -z "$(ls -A release 2>/dev/null)" ]; then
+            echo "::error::No build artifacts found to release."
+            exit 1
+          fi
           ls -lh release
 
       - name: Extract version from tag
