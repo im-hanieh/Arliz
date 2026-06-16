@@ -85,8 +85,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repository (full history for contributor detection)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
@@ -103,21 +105,60 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
 
+      - name: Determine contributors for this release
+        id: contributors
+        shell: bash
+        run: |
+          CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+
+          # Find the previous tag (the one just before the current one in version order)
+          PREV_TAG=$(git tag --sort=v:refname \
+            | grep -B1 "^${CURRENT_TAG}$" \
+            | head -1)
+
+          # If there's no previous tag (or grep returned the current one), this is the first release
+          if [ -z "$PREV_TAG" ] || [ "$PREV_TAG" = "$CURRENT_TAG" ]; then
+            HEADER="## Contributors"
+            CONTRIB=$(git log --format='%aN' \
+              | sort -u \
+              | sed 's/^/- /')
+          else
+            HEADER="## Contributors (${PREV_TAG} → ${CURRENT_TAG})"
+            CONTRIB=$(git log "${PREV_TAG}..${CURRENT_TAG}" --format='%aN' \
+              | sort -u \
+              | sed 's/^/- /')
+          fi
+
+          # Write to GitHub output as multiline
+          {
+            echo "header=${HEADER}"
+            echo "list<<EOF"
+            echo "${CONTRIB}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Extract release notes from docs/CHANGELOG.md
         id: notes
         run: |
           VERSION="${{ steps.version.outputs.VERSION }}"
           CHANGELOG="docs/CHANGELOG.md"
           if grep -q "## \[${VERSION}\]" "$CHANGELOG"; then
-            sed -n "/## \[${VERSION}\]/,/^## \[/p" "$CHANGELOG" | sed '$d' > release_notes.md
+            sed -n "/## \[${VERSION}\]/,/^## \[/p" "$CHANGELOG" | sed '$d' > release_body.md
           else
             {
               echo "Release ${{ github.ref_name }}"
               echo ""
               echo "See [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/docs/CHANGELOG.md) for details."
-            } > release_notes.md
+            } > release_body.md
           fi
-          cat release_notes.md
+
+          # Append contributors section
+          echo "" >> release_body.md
+          echo "${{ steps.contributors.outputs.header }}" >> release_body.md
+          echo "" >> release_body.md
+          echo "${{ steps.contributors.outputs.list }}" >> release_body.md
+
+          cat release_body.md
 
       - name: Determine prerelease flag
         id: pre
@@ -133,7 +174,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: "Arliz ${{ github.ref_name }}"
-          body_path: release_notes.md
+          body_path: release_body.md
           files: release/*
           draft: false
           prerelease: ${{ steps.pre.outputs.flag }}
