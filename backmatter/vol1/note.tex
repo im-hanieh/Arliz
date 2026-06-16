@@ -1,0 +1,68 @@
+%==========================================================
+% AUTHOR'S NOTE — Volume I: Zero to Bit
+%==========================================================
+
+\chapter*{A Note on This Volume}
+\addcontentsline{toc}{chapter}{A Note on This Volume}
+\chaptermark{A Note on This Volume}
+
+This volume is a first pass, not a complete treatment. The chapters on
+integer representation and floating-point arithmetic are thorough because
+everything else in this work depends on them. The chapters on serialization
+and compression are shorter --- enough to know what the topic is and what
+questions it raises, not enough to replace a dedicated reference. That
+imbalance is deliberate.
+
+A few things worth knowing before you continue.
+
+\medskip
+
+\noindent\textbf{On the code.}\quad
+Where this volume includes code examples, they are written to be read, not
+to be fast. If a chapter discusses an operation that has a well-known
+library implementation, the example still builds it from scratch. The
+purpose is understanding, not performance. When you want the tuned version,
+the relevant header is in Appendix~A.
+
+\medskip
+
+\noindent\textbf{On assumptions.}\quad
+This volume assumes \texttt{CHAR\_BIT == 8} and IEEE~754 binary
+floating-point throughout. Both hold on every common general-purpose
+processor. If you are working on hardware that violates these assumptions,
+the concepts still apply; the specific bit patterns and boundary values
+may differ.
+
+\medskip
+
+\noindent\textbf{On scope.}\quad
+Some topics that naturally belong to this layer of the stack --- Unicode
+normalization algorithms, arbitrary-precision arithmetic, advanced entropy
+coding --- are introduced but not fully developed. This is not an oversight.
+Those subjects are large enough to occupy their own books, and covering
+them completely here would shift the focus away from arrays. The citations
+at the end point to the right sources for each one.
+
+\medskip
+
+\noindent\textbf{On errors.}\quad
+Some mistakes remain in this text. This is a living document and it
+improves over time, but it does not pretend to be finished. If you find
+something wrong --- a calculation, an explanation, a claim about a
+standard --- please open an issue at
+\url{https://github.com/papyrxis/arliz}. Corrections are read and
+applied.
+
+\medskip
+
+Volume~I is preparatory. None of it is self-contained in the sense that
+understanding representation is a complete goal; it becomes meaningful when
+you can see what the hardware does with it, and what arrays do with both.
+That is what the next two volumes are for.
+
+\begin{flushright}
+  \textit{Mahdi Mamashli}\\
+  \textit{Iran, 2026}
+\end{flushright}
+
+\clearpage
