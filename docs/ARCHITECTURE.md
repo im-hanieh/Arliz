@@ -1,54 +1,116 @@
 # Architecture
 
-This document explains how the Arliz repository is organized: the directory layout, the LaTeX template/generation system, the Papyrxis workspace preset, and how the three volumes are produced from one shared source tree.
+This document explains how the Arliz repository is organized and how the three volumes are built from a single shared source tree.
 
-## High-Level Layout
+## Directory Layout
 
 ```
 .
-main.tex                  # Shared template for all volumes (token-based)
-Makefile                  # Entry points: make vol1 / vol2 / vol3 / volumes / clean...
-workspace.yml             # Papyrxis workspace configuration (.pxis/ preset source)
-.pxis/                    # Auto-generated workspace preset (DO NOT EDIT)
-configs/                  # Local override copies of selected .pxis components
-frontmatter/              # Shared + per-volume front matter
-parts/                     # The actual book content, one directory per volume
-backmatter/                # Per-volume back matter (glossary, bibliography, reflections)
-references/                # .bib files (e.g. references/part01.bib)
-covers/                     # Cover art (e.g. covers/cover-vol1.jpg)
-volumes/                    # One .conf file per volume — see "Volume Configs" below
-scripts/            # Build tooling 
-build/                       # Build output (gitignored)
-docs/                         # This documentation, CONTRIBUTING.md, GitHub pages site
+├── main.tex                  # Shared template for all volumes
+├── Makefile                  # Build entry points
+├── workspace.yml             # Papyrxis workspace config
+├── .pxis/                    # Auto-generated preset (do not edit)
+├── configs/                  # Local overrides for .pxis components
+├── volumes/                  # Volume content (.tex files per chapter)
+│   ├── vol1/
+│   ├── vol2/
+│   └── vol3/
+├── frontmatter/              # Shared and per-volume front matter
+├── backmatter/               # Per-volume back matter
+├── covers/                   # Cover images
+├── references/               # .bib files
+├── configs/volumes/          # One .conf file per volume
+├── scripts/volumes/          # Build, generate, and clean scripts
+├── build/                    # Build output (gitignored)
+└── docs/                     # Documentation
 ```
 
-## The Template + Config Pattern
+## How It Works
 
-Arliz is **one shared LaTeX template** (`main.tex`) instantiated three times, once per volume. `main.tex` is not compiled directly — it contains placeholder tokens like `@PDF_TITLE@`, `@FRONTMATTER_DIR@`, `@PARTS@`, and `@BACKMATTER@`. A generation step substitutes these tokens using a per-volume `.conf` file to produce a real, compilable `.tex` file.
+All three volumes share one LaTeX template: `main.tex`. This file is never compiled directly. It contains placeholder tokens like `@PDF_TITLE@`, `@FRONTMATTER_DIR@`, `@CHAPTERS@`, and `@BACKMATTER@`. A generation script replaces these tokens using a per-volume `.conf` file to produce a real `.tex` file that LaTeX can compile.
 
 This means:
 
-- **All three volumes share the same document structure** (title page, copyright, table of contents, bibliography, index) defined once in `main.tex`.
-- **Each volume supplies its own**: PDF metadata, front matter directory, list of `\part{}` files to include, and list of back matter files to include.
-- Adding a fourth volume in the future would mean adding one new `volumes/volN.conf` file — no changes to `main.tex` or the build scripts.
+- All volumes share the same document structure (title page, copyright, table of contents, bibliography, index).
+- Each volume defines its own PDF metadata, front matter, chapter list, and back matter.
+- Adding a new volume means adding one `.conf` file — nothing else changes.
 
-### Volume Configs (`volumes/volN.conf`)
+## Volume Config Files
 
-Each config is a small bash file (sourced, not executed) defining:
+Each `configs/volumes/volN.conf` is a bash file sourced by the build scripts. It defines:
 
 | Variable | Purpose |
 |---|---|
-| `PDF_TITLE` | Full PDF title metadata, e.g. `"Arliz: Zero to Bit"` |
-| `PDF_TITLE_FRONT` | Short running-header title, e.g. `"Arliz Vol. I"` |
+| `PDF_TITLE` | Full PDF title, e.g. `"Arliz: Zero to Bit"` |
+| `PDF_TITLE_FRONT` | Short running header title, e.g. `"Arliz Vol. I"` |
 | `PDF_COVER_TITLE` | Cover title text |
 | `PDF_SUBJECT` | PDF subject metadata |
 | `PDF_KEYWORDS` | PDF keywords metadata |
-| `FRONTMATTER_DIR` | Per-volume front matter directory (e.g. `frontmatter/vol1`) |
-| `MAIN_FRONTMATTER` | Shared front matter directory (`frontmatter`) |
-| `PARTS` | Bash array of `\input{}` paths for this volume's part(s) |
-| `BACKMATTER` | Bash array of `\input{}` paths for this volume's back matter |
-| `VOLUME_NUM` | Numeric volume number, e.g. `1` |
-| `VOLUME_TITLE` | Volume title with underscores instead of spaces, e.g. `Zero_to_Bit` |
-| `COVER_IMAGE` | Cover image path (used by the cover generator) |
+| `FRONTMATTER_DIR` | Per-volume front matter directory |
+| `MAIN_FRONTMATTER` | Shared front matter directory |
+| `CHAPTERS` | Bash array of chapter `\input{}` paths |
+| `BACKMATTER` | Bash array of back matter `\input{}` paths |
+| `VOLUME_NUM` | Volume number, e.g. `1` |
+| `VOLUME_TITLE` | Volume title with underscores, e.g. `Zero_to_Bit` |
+| `VOLUME_DISPLAY_TITLE` | Human-readable title, e.g. `"Zero to Bit"` |
+| `COVER_IMAGE` | Path to cover image |
 
-`VOLUME_NUM` and `VOLUME_TITLE` together determine the **output filename** for that volume (see "Output Naming" below).
+`VOLUME_NUM` and `VOLUME_TITLE` together determine the output filename.
+
+## Output Naming
+
+Generated files follow this pattern:
+
+```
+<YEAR>_ARLIZ_<VOLUME_TITLE>_Volume_<VOLUME_NUM>.tex
+build/<YEAR>_ARLIZ_<VOLUME_TITLE>_Volume_<VOLUME_NUM>.pdf
+```
+
+Example for Volume I in 2026:
+
+```
+2026_ARLIZ_Zero_to_Bit_Volume_1.tex
+build/2026_ARLIZ_Zero_to_Bit_Volume_1.pdf
+```
+
+These generated `.tex` files are build artifacts. Do not edit them — they are overwritten on every build. Edit the source files under `volumes/`, `frontmatter/`, `backmatter/`, etc.
+
+## Build Scripts
+
+All build logic lives in `scripts/volumes/`:
+
+| Script | Purpose |
+|---|---|
+| `generate.sh <volN>` | Produces the `.tex` file from `main.tex` + `.conf` |
+| `build.sh <volN\|all>` | Generates and compiles a volume with `latexmk` |
+| `clean.sh` | Removes all generated `.tex` files and `build/` |
+
+The `Makefile` wraps these scripts with convenience targets. See `docs/WORKFLOWS.md` for the full list of commands.
+
+## Workspace Preset
+
+The `.pxis/preset.tex` file is auto-generated by the Papyrxis workspace tool when you run `make sync`. It pulls together all the LaTeX packages and settings defined in `workspace.yml` and the component files under `.pxis/components/`.
+
+Do not edit `.pxis/preset.tex` by hand. If you need to change packages or settings, edit `workspace.yml` or the relevant file under `configs/` (which contains local overrides), then run `make sync`.
+
+## LaTeX Components
+
+The preset loads these components in order:
+
+- `fonts` — font packages and encoding
+- `math` — math packages and operators
+- `graphics` — figure and diagram packages
+- `tables` — table packages
+- `hyperref` — PDF links and metadata
+- `colors` — color definitions
+- `layout` — page geometry, spacing, list settings
+- `titles` — section heading formatting
+- `pagestyles` — headers and footers
+- `env` — custom environments (definition, theorem, example, etc.)
+- `index` — index generation
+- `bibliography` — biblatex setup
+- `code` — listings and algorithm packages
+- `boxes` — tcolorbox environments
+- `commands/base` — custom commands and math macros
+
+Local overrides in `configs/` take precedence over the workspace defaults for the files listed under `overrides.allow` in `workspace.yml`.

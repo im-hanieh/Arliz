@@ -1,35 +1,28 @@
 name: "General Inquiry"
-description: "Ask a question or request clarification about Arliz"
+description: "Ask a question about Arliz"
 title: "Question: "
 labels: ["question"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Use this template to ask general questions about content, structure, or usage of Arliz.
   - type: input
-    id: question_summary
+    id: question
     attributes:
-      label: "What is your question?"
-      description: "Summarize your question in one or two sentences."
-      placeholder: "For example: “I am unsure how zero is introduced in `book/parts/part02/part02.tex`.”"
+      label: "What's your question?"
+      placeholder: "A clear, specific question."
     validations:
-        required: true
+      required: true
+
   - type: textarea
     id: context
     attributes:
       label: "Context"
-      description: "Provide any background or details that would help us understand and answer your question."
-      placeholder: "Optional: reference specific text or sections."
+      placeholder: "Any background that helps answer the question."
     validations:
-        required: false
+      required: false
+
   - type: input
-    id: related_file
+    id: file
     attributes:
       label: "Related file(s)"
-      description: |
-        If relevant, specify which file(s) this question pertains to (e.g., `book/parts/part04/part04.tex`).  
-        Use two-digit part format when referencing parts.
-      placeholder: "e.g., book/parts/part04/part04.tex"
+      placeholder: "e.g. volumes/vol3/chapter07/chapter07.tex"
     validations:
-        required: false
+      required: false

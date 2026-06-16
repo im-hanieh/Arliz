@@ -1,65 +1,55 @@
 name: "Bug Report"
-description: "Report a problem or unintended behavior in Arliz"
+description: "Report a problem in Arliz"
 title: "Bug: "
 labels: ["bug"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Please fill out this form to help us diagnose and fix the issue as efficiently as possible.
   - type: input
     id: description
-    attributes: 
-      label: "Describe the bug"
-      description: "Provide a clear and concise description of the issue you encountered."
-      placeholder: "A summary of what went wrong."
+    attributes:
+      label: "What went wrong?"
+      placeholder: "A short description of the problem."
     validations:
-        required: true
+      required: true
+
   - type: textarea
-    id: steps_to_reproduce
+    id: steps
     attributes:
       label: "Steps to reproduce"
-      description: |
-        List the steps needed to reproduce the bug.  
-        Include exact commands, file names, or actions.  
-        Use the two-digit format for parts (e.g., `book/parts/part02/part02.tex`).
       placeholder: |
-        1. Open `book/parts/part02/part02.tex`  
-        2. Run `xelatex Arliz.tex`  
-        3. Observe the compilation error on line 45
+        1. Open `volumes/vol1/chapter01/chapter01.tex`
+        2. Run `make vol1`
+        3. See error on line 42
     validations:
-        required: true
+      required: true
+
   - type: input
-    id: expected_behavior
-    attributes:  
-      label: "Expected behavior"
-      description: "Explain what you expected to happen when following the steps above."
-      placeholder: "What should have happened instead?"
-    validations:
-        required: true
-  - type: input
-    id: actual_behavior
+    id: expected
     attributes:
-      label: "Actual behavior"
-      description: "Describe what actually happened, including any error messages or incorrect output."
-      placeholder: "Exact error text or unexpected result."
+      label: "What should have happened?"
+      placeholder: "Describe the expected behavior."
     validations:
-        required: true
+      required: true
+
   - type: input
-    id: latex_file
+    id: actual
     attributes:
-      label: "Affected LaTeX file(s)"
-      description: |
-        Specify which file(s) are affected by this bug.  
-        Use the two-digit format for parts (e.g., `book/parts/part02/part02.tex`, `config/macros.tex`).
-      placeholder: "e.g., book/parts/part02/part02.tex"
+      label: "What actually happened?"
+      placeholder: "Include any error messages or unexpected output."
     validations:
-        required: true
+      required: true
+
+  - type: input
+    id: file
+    attributes:
+      label: "Affected file(s)"
+      placeholder: "e.g. volumes/vol1/chapter03/chapter03.tex"
+    validations:
+      required: false
+
   - type: textarea
-    id: additional_context
-    attributes:  
+    id: context
+    attributes:
       label: "Additional context"
-      description: "Add any other context (e.g., error logs, console output, screenshots) that might help diagnose the problem."
-      placeholder: "Optional: paste logs, error messages, or screenshot links here."
+      placeholder: "Logs, screenshots, or anything else that might help."
     validations:
-        required: false
+      required: false

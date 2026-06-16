@@ -1,43 +1,36 @@
 name: "Feature Request"
-description: "Suggest a new feature or enhancement for Arliz"
+description: "Suggest a new feature or improvement"
 title: "Feature: "
 labels: ["enhancement"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Use this template to propose new functionality, improvements, or additions to Arliz.
   - type: input
-    id: feature_summary
+    id: summary
     attributes:
-      label: "Describe the proposed feature"
-      description: "Provide a concise summary of the feature or enhancement you would like to see."
-      placeholder: "A brief description of the new feature."
+      label: "What do you want to add or change?"
+      placeholder: "A short description of the feature."
     validations:
-        required: true
+      required: true
+
   - type: textarea
-    id: rationale
+    id: reason
     attributes:
-      label: "Rationale"
-      description: "Explain why this feature is important or how it would benefit readers/contributors."
-      placeholder: "Why is this needed? What problem does it solve?"
+      label: "Why is this useful?"
+      placeholder: "Explain the problem it solves or the value it adds."
     validations:
-        required: true
+      required: true
+
   - type: input
-    id: affected_sections
-    attributes: 
-      label: "Affected section(s) or file(s)"
-      description: |
-        Specify which part(s) of the book or configuration would be impacted.  
-        Use two-digit part format when referencing parts (e.g., `book/parts/part02/part02.tex`, `config/macros.tex`).
-      placeholder: "e.g., book/parts/part03/part03.tex"
-    validations:
-        required: false
-  - type: textarea
-    id: additional_details
+    id: location
     attributes:
-      label: "Additional details or examples"
-      description: "Provide any mockups, code snippets, or examples to illustrate how the feature might work."
-      placeholder: "Optional: attach diagrams, pseudocode, or sample LaTeX snippets."
+      label: "Where in the book does this apply?"
+      placeholder: "e.g. volumes/vol1/chapter05, configs/macros.tex, or N/A"
     validations:
-        required: false
+      required: false
+
+  - type: textarea
+    id: details
+    attributes:
+      label: "Additional details"
+      placeholder: "Examples, sketches, LaTeX snippets, or references."
+    validations:
+      required: false
