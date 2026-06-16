@@ -108,28 +108,38 @@ jobs:
       - name: Determine contributors for this release
         id: contributors
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           CURRENT_TAG="${GITHUB_REF#refs/tags/}"
+          REPO="${{ github.repository }}"
 
-          # Find the previous tag (the one just before the current one in version order)
+          # Find previous tag
           PREV_TAG=$(git tag --sort=v:refname \
             | grep -B1 "^${CURRENT_TAG}$" \
             | head -1)
 
-          # If there's no previous tag (or grep returned the current one), this is the first release
           if [ -z "$PREV_TAG" ] || [ "$PREV_TAG" = "$CURRENT_TAG" ]; then
             HEADER="## Contributors"
-            CONTRIB=$(git log --format='%aN' \
-              | sort -u \
-              | sed 's/^/- /')
+            # Get all-time contributors via GitHub API
+            CONTRIB=$(gh api "repos/${REPO}/contributors?per_page=100" \
+              --jq '.[].login' \
+              | sed 's/^/- @/')
           else
             HEADER="## Contributors (${PREV_TAG} → ${CURRENT_TAG})"
-            CONTRIB=$(git log "${PREV_TAG}..${CURRENT_TAG}" --format='%aN' \
+            # Get commits between tags and map to GitHub logins via API
+            CONTRIB=$(git log "${PREV_TAG}..${CURRENT_TAG}" \
+              --format='%H' \
+              | while read sha; do
+                  gh api "repos/${REPO}/commits/${sha}" \
+                    --jq '.author.login // empty' 2>/dev/null
+                done \
+              | grep -v '^$' \
+              | grep -v 'github-actions' \
               | sort -u \
-              | sed 's/^/- /')
+              | sed 's/^/- @/')
           fi
 
-          # Write to GitHub output as multiline
           {
             echo "header=${HEADER}"
             echo "list<<EOF"
