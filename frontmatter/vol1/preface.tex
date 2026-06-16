@@ -2,47 +2,39 @@
 
 \section*{Why Would Anyone Learn This Stuff?}
 
-\lettrine{E}{very book has its origin story}, and this one is no exception. If I were to capture the essence of creating this book in a single word, that word would be \textbf{curiosity}---though \emph{improvised} comes as a close second. What you hold in your hands (or view on your screen) is the result of years of persistent questioning, a journey that began with a simple yet profound realization: I didn't truly understand what an array was.\\
-This might sound trivial to some. After all, arrays are fundamental to programming, covered in every computer science curriculum, explained in countless tutorials. Yet despite encountering terms like \texttt{array}, \texttt{stack}, \texttt{queue}, \texttt{hash table}, and \texttt{tensor} repeatedly throughout my studies, I found myself increasingly frustrated by the superficial explanations typically offered. Most resources assumed you already knew what these structures fundamentally represented---their conceptual essence, their implementation mechanics, their performance characteristics, and, beneath all of that, the physical machinery that makes any of it possible.\\
-But I wanted the \emph{roots}. I needed to understand not just how to use an array, but what it truly meant at every level---from a voltage difference across a transistor to a tensor core multiplying matrices for a neural network. This led me to a decisive moment:
+\lettrine{E}{very book has its origin story}, and this one is no exception. If I were to capture the essence of creating this book in a single word, that word would be \textbf{curiosity}---though \emph{improvised} comes as a close second. What you hold in your hands (or view on your screen) is the result of years of persistent questioning, a journey that began with a simple yet profound realization: 
 
 \begin{center}
-	\emph{If I truly want to understand, I must build from the foundation---and follow that foundation all the way to the frontier.}
+    \emph{What is an array?}
 \end{center}
+I didn't understand arrays. Not really.\\
 
-And so began the journey that became Arliz.
+I knew how to use them. I'd written plenty of code that used them. But if someone asked me what an array actually is not the syntax, not the API, but the thing itself I couldn't give a good answer. That bothered me.\\
+So I started digging. What I found was that the question doesn't stop at the language level. It goes through the runtime, through memory layout, through the hardware. Follow it far enough and you end up at transistors, and voltages, and the question of how a physical thing can represent information at all.
+
+That's what this book is about. It's one question followed seriously.
 
 \section*{The Name and Its Meaning}
 
-The name "Arliz" started as a somewhat arbitrary choice---I needed a title, and it sounded right. However, as the book evolved, I discovered a fitting expansion that captures its essence:
-
-\begin{center}
-	\textbf{Arliz = Arrays, Reasoning, Logic, Identity, Zero}
-\end{center}
-
-This backronym embodies the core pillars of our exploration:
-\begin{itemize}
-	\item \textbf{Arrays:} The fundamental data structure we seek to understand from voltage to vector
-	\item \textbf{Reasoning:} The systematic thinking behind data organization and algorithmic design
-	\item \textbf{Logic:} The formal and physical principles that govern computation and data manipulation
-	\item \textbf{Identity:} The concept of distinguishing, indexing, and assigning meaning to elements within structures
-	\item \textbf{Zero:} The foundation from which all indexing, computation, and systematic organization originates
-\end{itemize}
-
-You may pronounce it "Ar-liz," "Array-Liz," or however feels natural to you. I personally say "ar-liz," but the pronunciation matters less than the journey it represents.
+Arliz is an acronym: Arrays, Reasoning, Logic, Identity, Zero. It started as a name that sounded right, and the acronym came later. You can say it "ar-liz." It doesn't matter much. I personally say "ar-liz," but the pronunciation matters less than the journey it represents.
 
 \section*{One Work, Three Volumes}
 
-\textit{Arliz} was never meant to be read in a single sitting, and after enough rewrites I stopped pretending otherwise. What you are holding is not "a book"---it is one volume of a single continuous work, divided the way older technical and philosophical traditions used to divide large projects: not into arbitrary chapters of similar length, but into volumes that each stand on their own while still being unmistakably part of one larger whole. A reader of Ibn S\=in\=a's \textit{al-Shif\=a'}, or of Aristotle's or al-F\=ar\=ab\=i's treatises, did not expect to carry the entire corpus bound into a single spine; each volume was a complete stage of the argument, readable on its own terms, yet pointing forward and backward to the rest.\\
-Arliz follows that model. The whole work walks one continuous path---from the moment a voltage appears across a transistor, to the moment that voltage becomes a bit, then a number, then an array element, and finally a structure powerful enough to run a sorting algorithm, traverse a graph, or feed a tensor into a neural network. That path is too long, and the material at each stage too dense, to fit comfortably between two covers. So the work is divided into three volumes, each one a complete stage of that path:
+\textit{Arliz} was never meant to be read in a single sitting, and after enough rewrites I stopped pretending otherwise. In fact, it was never even meant to become a book.
+
+What began as a single article slowly grew as new ideas, revisions, and discoveries accumulated over the course of two years. The original manuscript expanded from a few pages into a much longer essay; the essay evolved into a multi-chapter book; the book itself eventually outgrew a single volume and was divided into several parts. Today, \textit{Arliz} spans three volumes:
 
 \begin{itemize}
-	\item \textbf{Volume I --- Zero to Bit:} How information is encoded at all, from semiconductor switching and voltage levels through bits, numbers, characters, and the raw encodings everything else is built from.
-	\item \textbf{Volume II --- Silicon Horizon:} The hardware that turns encoded information into computation---logic gates, memory hierarchies, processors, caches, vector units, GPUs, and the interconnects that move data between all of them.
-	\item \textbf{Volume III --- Array Odyssey:} Arrays themselves, in full: their mathematics, their memory layout, every variant and technique built on top of them, the data structures and algorithms they enable, and the parallel and large-scale systems that process them today.
+    \item \textbf{Volume I --- Zero to Bit.} How information gets encoded. Voltages, bits, integers, floats, characters, pointers, bytes.
+    \item \textbf{Volume II --- Silicon Horizon.} The hardware that runs the code. Logic gates, memory, caches, CPUs, GPUs.
+    \item \textbf{Volume III --- Array Odyssey.} Arrays themselves. Layout, algorithms, parallel systems, applications.
 \end{itemize}
 
-This volume's Introduction lays out exactly what \emph{this} volume covers, what it assumes you already know, and how it connects to its companions; I won't repeat that here. What matters for this preface is simply that the division into volumes is not a retreat from the project's scope---if anything, it is what makes the scope possible. Each volume can be read, revised, and improved on its own schedule, while the underlying argument remains one continuous line from voltage to vector.
+Each volume stands on its own, but they build on each other. Volume II assumes Volume I. Volume III assumes both.
+
+\section*{What This Work Represents}
+
+Arliz is not a gentle introduction to programming, nor is it a purely theoretical treatment of data structures. It is a comprehensive technical exploration of the most fundamental data structure in computing, examined from every relevant angle, and grounded the entire way down in the physical reality of the machines that run our code.
 
 \section*{What This Work Represents}
 
@@ -52,16 +44,8 @@ This is a living work. As I discover better explanations, uncover new implementa
 \vfill
 
 \begin{flushright}
-	\textit{Mahdi Mamashli} \\
-	\textit{2026} \\
+    \textit{Mahdi Mamashli} \\
+    \textit{2026}
 \end{flushright}
-
-\vspace{2em}
-
-\begin{quote}
-	\textit{``The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.''}
-
-	\hfill--- \textsc{Edsger W. Dijkstra}
-\end{quote}
 
 \clearpage
