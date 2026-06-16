@@ -211,4 +211,3 @@ Include any final comments, caveats, or context that reviewers should know. For 
 * This PR introduces the `\Z` macro for integer notation; ensure that no other macros conflict with this naming.
 * The new figure uses PDF format; if the repository is compiled with `latexmk`, confirm it picks up `.pdf` graphics without issues.
 * No external fonts were added in this PR; future PRs that introduce fonts should document their installation or bundling in `README.md`.
-
