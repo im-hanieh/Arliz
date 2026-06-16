@@ -28,7 +28,7 @@ Each volume compiles to its own standalone PDF, named:
 
 For example, Volume I currently builds as `2026_ARLIZ_Zero_to_Bit_Volume_1.pdf`.
 
-- [Browse LaTeX source](./parts/)
+- [Browse LaTeX source](./volumes/)
 - Compiled PDFs are published under [Releases](https://github.com/papyrxis/Arliz/releases) and on the [project site](https://github.com/papyrxis/Arliz/tree/main/docs)
 
 ## Contributing
