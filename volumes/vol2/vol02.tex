@@ -1,44 +1,10 @@
 %==============================================
 % VOLUME II: Silicon Horizon
-% (was: "Computer Architecture & Logic" / "Part 2")
 %==============================================
-%
-% NOTE ON VOLUME STRUCTURE:
-%   Arliz is now organized as three volumes rather than three parts of
-%   a single book (see Preface and Introduction). This file represents
-%   the content of Volume II. It assumes the representational vocabulary
-%   established in Volume I (Zero to Bit) and is, in turn, assumed
-%   by Volume III (Array Odyssey). If compiled as a standalone book,
-%   replace \part{} below with a suitable top-level structure for its
-%   own document.
-%
-% MERGE NOTES (step by step, voltage -> bits -> arrays):
-%   - Keeps the core of original Part 2 (semiconductors -> logic gates ->
-%     sequential logic -> memory cells -> memory hierarchy -> ISA ->
-%     pipelines -> multicore -> SIMD/GPU -> interconnects).
-%   - DROPS the consumer-hardware repair/diagnostic chapters from the
-%     original Part 2 (motherboard repair, PSU diagnostics, mobile device
-%     teardown, soldering, etc.) -- not relevant to an array-focused work.
-%   - MERGES IN from old Part 5 (Parallelism & Systems), placed at the
-%     point in this volume where the corresponding non-parallel topic
-%     already sits, so the reader sees "single unit" then immediately
-%     "many units":
-%       * NUMA Architecture            -> after Memory Hierarchy chapters
-%       * SIMD/Vector ISA chapters      -> after ISA / addressing chapters
-%       * GPU Architecture / Execution / Memory Hierarchy / Programming
-%         Models                       -> after CPU multicore chapter
-%   - MERGES IN from old Part 6 (Synthesis & Frontiers), placed as the
-%     hardware-facing capstone of this volume:
-%       * TPU Architecture (systolic arrays) -> end of GPU block
-%       * FPGA/ASIC chapters from old Part 2 retained, ASIC-for-arrays
-%         chapter from old Part 6 placed alongside them
-%   - Hardware-diagnostic chapters from old Parts 4/5 (multi-core
-%     diagnostics, GPU repair, interconnect diagnostics, etc.) are DROPPED.
-%
 \part{Silicon Horizon}
 \label{part:silicon-horizon}
 
-\begin{partintro}
+\begin{volumesintro}
 \lettrine[lines=3]{A}{rrays exist} in physical hardware. To understand array performance, we must understand the machines that execute our code---from individual transistors switching in response to a voltage, up through logic gates, memory cells, processors, caches, and the massively parallel engines---multicore CPUs, vector units, and GPUs---that move and transform arrays today. This volume builds that complete picture, one layer at a time, continuing directly from where Volume I left off.
 
 \vspace{1em}
@@ -55,7 +21,7 @@
 
 \hfill--- \textsc{Richard Hamming}
 \end{quote}
-\end{partintro}
+\end{volumesintro}
 
 % ============================================================
 % STAGE 1: From transistors to logic gates

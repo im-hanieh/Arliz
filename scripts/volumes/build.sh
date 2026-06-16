@@ -16,7 +16,7 @@ usage() {
 
 build_one() {
   local vol="$1"
-  local conf="$ROOT/volumes/${vol}.conf"
+  local conf="$ROOT/configs/volumes/${vol}.conf"
 
   [[ -f "$conf" ]] || die "unknown volume '$vol' (no $conf)"
 
@@ -25,10 +25,9 @@ build_one() {
   : "${VOLUME_NUM:?VOLUME_NUM not set in $conf}"
   : "${VOLUME_TITLE:?VOLUME_TITLE not set in $conf}"
 
-  # Output basename, e.g. 2026_ARLIZ_Zero_to_Bit_1
   local year
   year="$(date -u '+%Y')"
-  local out_basename="${year}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}"
+  local out_basename="${year}_ARLIZ_${VOLUME_TITLE}_Volume_${VOLUME_NUM}"
 
   info "[$vol] generate ${out_basename}.tex"
   bash "$GENERATE" "$vol"
@@ -48,7 +47,6 @@ build_one() {
       "${out_basename}.tex"
   )
 
-  # Copy the finished PDF to build/ root with the standardized name
   local src="$BUILD_DIR/$vol/${out_basename}.pdf"
   local dst="$BUILD_DIR/${out_basename}.pdf"
   [[ -f "$src" ]] || die "latexmk finished but $src not found"
@@ -61,7 +59,7 @@ build_one() {
 
 case "$1" in
   all)
-    for conf in "$ROOT/volumes"/*.conf; do
+    for conf in "$ROOT/configs/volumes"/*.conf; do
       build_one "$(basename "$conf" .conf)"
     done
     ;;

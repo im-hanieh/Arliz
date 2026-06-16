@@ -1,65 +1,10 @@
 %==============================================
 % VOLUME III: ARRAY ODYSSEY
-% (was: "Part 3")
 %==============================================
-%
-% NOTE ON VOLUME STRUCTURE:
-%   Arliz is now organized as three volumes rather than three parts of
-%   a single book (see Preface and Introduction). This file represents
-%   the content of Volume III, the destination of the whole work. It
-%   assumes the representational vocabulary of Volume I (Zero to Bit) and the hardware model of Volume II (Silicon Horizon). If compiled as a standalone book, replace \part{} below
-%   with a suitable top-level structure for its own document.
-%
-% MERGE NOTES (step by step, voltage -> bits -> arrays):
-%   - Keeps ALL original Part 3 chapters (theory, memory layout,
-%     traversal, dynamic arrays, multidimensional arrays, sparse arrays,
-%     bit arrays, searching, sorting, rotation/permutation, two-pointer,
-%     prefix sums, views/slices, broadcasting, scan/reduce, etc.)
-%   - DROPS the memory/storage hardware-testing and diagnostic chapters
-%     that were appended to the end of the original Part 3 (March
-%     algorithms for RAM testing, SMART attributes, etc.) -- these belong
-%     to hardware repair, not array theory, and have no home in this work.
-%   - MERGES IN from old Part 4 (Data Structures & Algorithms), placed
-%     immediately after the core array-odyssey material, since every one
-%     of these structures and algorithms IS an array technique:
-%       * Stacks/Queues/Deques/Priority Queues/Heaps
-%       * Hash tables and probabilistic structures (Bloom filters, etc.)
-%       * Strings, pattern matching, suffix structures, tries
-%       * Graph representations and classic graph algorithms
-%       * Range-query structures (segment tree, Fenwick tree, sparse table)
-%       * Monotonic stack/queue
-%       * Dynamic programming
-%       * Divide & conquer, greedy, backtracking
-%       * Online/streaming algorithms, amortized analysis,
-%         cache-oblivious algorithms
-%   - MERGES IN from old Part 5 (Parallelism & Systems), the
-%     algorithm-level (not pure-hardware) parallel chapters, placed as
-%     a "parallel processing of arrays" section near the end:
-%       * Concurrency fundamentals, performance laws (Amdahl/Gustafson)
-%       * Threads, thread pools, work stealing, fork-join
-%       * OpenMP
-%       * Synchronization primitives, lock-free structures
-%       * GPU array algorithms: sorting, reduction, scan
-%       * Distributed array processing: MPI, partitioning, MapReduce,
-%         Spark, PGAS, consensus
-%       * Real-time and energy-aware array processing
-%   - MERGES IN from old Part 6 (Synthesis & Frontiers), the
-%     application-domain array chapters, placed as the final "where
-%     arrays are used today" section:
-%       * Tensors, ML array operations, attention/transformers
-%       * Linear algebra (BLAS/LAPACK), scientific computing, FFT
-%       * Image/audio/video/signal processing
-%       * Bioinformatics array applications
-%       * Quantum state vectors
-%       * Array programming languages and ecosystems (APL, NumPy, etc.)
-%       * Persistent/compressed/succinct array representations
-%       * Privacy-preserving and distributed-ledger array structures
-%       * Emerging array hardware/paradigms (neuromorphic, optical, DNA)
-%
 \part{Array Odyssey}
 \label{part:array-odyssey}
 
-\begin{partintro}
+\begin{volumesintro}
 \lettrine[lines=3]{A}{t last} we arrive at arrays themselves---the most fundamental data structure in computing, and the destination of everything Volumes I and II built up to. This volume explores arrays from every conceivable angle: theory, implementation, optimization, the data structures and algorithms built on top of them, the parallel and distributed systems that process them at scale, and the application domains---from machine learning to quantum computing---where arrays do their real work.
 
 \vspace{1em}
@@ -76,7 +21,7 @@
 
 \hfill--- \textsc{Edsger W. Dijkstra}
 \end{quote}
-\end{partintro}
+\end{volumesintro}
 
 % ============================================================
 % SECTION A: Array theory and memory layout (original Part 3, kept as-is)
