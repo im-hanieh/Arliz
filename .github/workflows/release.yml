@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install build prerequisites
         run: |
@@ -45,17 +47,41 @@ jobs:
             exit 1
           }
 
-      - name: Build ${{ matrix.volume }} (generate + latexmk + biber)
-        run: bash scripts/volumes/build.sh ${{ matrix.volume }}
-
       - name: Resolve output basename for this volume
         id: meta
-        if: always()
         shell: bash
         run: |
-          source <(tr -d '\r' < volumes/${{ matrix.volume }}.conf)
+          CONF="configs/volumes/${{ matrix.volume }}.conf"
+          if [[ ! -f "$CONF" ]]; then
+            echo "::error::Config not found: $CONF"
+            exit 1
+          fi
+          source <(tr -d '\r' < "$CONF")
+          if [[ -z "${VOLUME_TITLE:-}" || -z "${VOLUME_NUM:-}" ]]; then
+            echo "::error::VOLUME_TITLE or VOLUME_NUM not set in $CONF"
+            exit 1
+          fi
           YEAR="$(date -u '+%Y')"
-          echo "basename=${YEAR}_ARLIZ_${VOLUME_TITLE}_${VOLUME_NUM}" >> "$GITHUB_OUTPUT"
+          BASENAME="${YEAR}_ARLIZ_${VOLUME_TITLE}_Volume_${VOLUME_NUM}"
+          echo "basename=${BASENAME}" >> "$GITHUB_OUTPUT"
+          echo "Resolved basename: ${BASENAME}"
+
+      - name: Generate and compile ${{ matrix.volume }}
+        shell: bash
+        run: |
+          bash scripts/volumes/build.sh ${{ matrix.volume }}
+
+      - name: Verify PDF was produced
+        shell: bash
+        run: |
+          PDF="build/${{ steps.meta.outputs.basename }}.pdf"
+          if [[ ! -f "$PDF" ]]; then
+            echo "::error::Expected PDF not found: $PDF"
+            echo "Contents of build/:"
+            find build/ -type f 2>/dev/null || echo "(build/ is empty or missing)"
+            exit 1
+          fi
+          echo "PDF found: $PDF ($(du -sh "$PDF" | cut -f1))"
 
       - name: Upload PDF artifact
         if: always()
@@ -81,7 +107,7 @@ jobs:
   create-release:
     name: Create GitHub Release
     needs: build-volumes
-    if: startsWith(github.ref, 'refs/tags/')
+    if: always() && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
 
     steps:
@@ -94,12 +120,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+        continue-on-error: true
 
       - name: Collect release assets
         run: |
           mkdir -p release
-          find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) -exec cp {} release/ \;
-          ls -lh release
+          if [[ -d artifacts ]]; then
+            find artifacts -type f \( -name '*.pdf' -o -name '*.tex' \) \
+              -exec cp {} release/ \;
+          else
+            echo "::warning::No artifacts directory found; release will have no assets."
+          fi
+          echo "Release assets:"
+          ls -lh release/ || echo "(none)"
 
       - name: Extract version from tag
         id: version
@@ -114,32 +147,34 @@ jobs:
           CURRENT_TAG="${GITHUB_REF#refs/tags/}"
           REPO="${{ github.repository }}"
 
-          # Find previous tag
+          # Find the previous tag (exclude the current one)
           PREV_TAG=$(git tag --sort=v:refname \
             | grep -B1 "^${CURRENT_TAG}$" \
             | head -1)
 
-          if [ -z "$PREV_TAG" ] || [ "$PREV_TAG" = "$CURRENT_TAG" ]; then
+          if [[ -z "$PREV_TAG" || "$PREV_TAG" == "$CURRENT_TAG" ]]; then
             HEADER="## Contributors"
-            # Get all-time contributors via GitHub API
+            # First release: list all-time contributors via GitHub API
             CONTRIB=$(gh api "repos/${REPO}/contributors?per_page=100" \
               --jq '.[].login' \
+              | grep -v 'github-actions\[bot\]' \
               | sed 's/^/- @/')
           else
             HEADER="## Contributors (${PREV_TAG} → ${CURRENT_TAG})"
-            # Get commits between tags and map to GitHub logins via API
+            # Incremental: map commits between tags to GitHub logins
             CONTRIB=$(git log "${PREV_TAG}..${CURRENT_TAG}" \
               --format='%H' \
-              | while read sha; do
+              | while read -r sha; do
                   gh api "repos/${REPO}/commits/${sha}" \
                     --jq '.author.login // empty' 2>/dev/null
                 done \
               | grep -v '^$' \
-              | grep -v 'github-actions' \
+              | grep -v 'github-actions\[bot\]' \
               | sort -u \
               | sed 's/^/- @/')
           fi
 
+          # Write multi-line outputs safely
           {
             echo "header=${HEADER}"
             echo "list<<EOF"
@@ -152,22 +187,30 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.VERSION }}"
           CHANGELOG="docs/CHANGELOG.md"
+
           if grep -q "## \[${VERSION}\]" "$CHANGELOG"; then
-            sed -n "/## \[${VERSION}\]/,/^## \[/p" "$CHANGELOG" | sed '$d' > release_body.md
+            # Extract the section for this version, drop the next heading line
+            sed -n "/## \[${VERSION}\]/,/^## \[/p" "$CHANGELOG" \
+              | sed '$d' > release_body.md
           else
             {
-              echo "Release ${{ github.ref_name }}"
+              echo "## Release ${{ github.ref_name }}"
               echo ""
               echo "See [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/docs/CHANGELOG.md) for details."
             } > release_body.md
           fi
 
           # Append contributors section
-          echo "" >> release_body.md
-          echo "${{ steps.contributors.outputs.header }}" >> release_body.md
-          echo "" >> release_body.md
-          echo "${{ steps.contributors.outputs.list }}" >> release_body.md
+          {
+            echo ""
+            echo "---"
+            echo ""
+            echo "${{ steps.contributors.outputs.header }}"
+            echo ""
+            echo "${{ steps.contributors.outputs.list }}"
+          } >> release_body.md
 
+          echo "--- release_body.md ---"
           cat release_body.md
 
       - name: Determine prerelease flag
