@@ -222,14 +222,13 @@ jobs:
           else
             echo "flag=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - uses: softprops/action-gh-release@v2
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           name: "Arliz ${{ github.ref_name }}"
           body_path: release_body.md
           files: release/*
           draft: false
-          prerelease: ${{ steps.pre.outputs.flag }}
-          fail_on_unmatched_files: false
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
